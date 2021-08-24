@@ -1,5 +1,38 @@
-Installation des jeux 
+# _[ - Install Games - ]_
 
+## EN
+First of all the possible formats are .NSP; .XCI; NSZ; and XCZ (but never used). The fastest to install are the .nsp and the lightest are the .nsz (but longer to install). You must first get the game, for that magic.
+
+Installation on PC 💻
+
+
+First you will need java so install it if it's not already done [Java]( https://www.java.com/fr/). 
+Then you will need the latest release of ns-usbloader : 
+[📜 ns-usbloader](https://github.com/developersu/ns-usbloader/releases/latest)
+
+(legacy for Mac, normal for Windows)
+
+⭕ Then open the settings by pressing the gear icon on the left
+
+✅ Allow the selection of XCI/NSZ/XCZ files for Tinfoil , then click "Download and Install drivers" to install the required drivers
+Installation on console
+
+Then you have to download this archive and extract it to the root of the SD card 
+
+[📜 Tinwoo](https://bit.ly/34HyMpO)
+Installing a game
+
+ We will perform a first test by installing the nsp of TinWoo. Moreover, you will need it for your future installations.
+
+
+[📜 TinWoo Forwarder](https://cdn.discordapp.com/attachments/660558713047875604/849721105220370492/TinWoo_0579379B12970000.nsp)
+ 
+On your console open the image gallery and go to the TinWoo homebrew. Connect your console to your computer via a USB cable (which transfers data) and then select "Install from USB device". 
+On the NS-USBloader software click on "Select .NSP files" then open the location of the TinWoo_0579379B12970000.nsp file downloaded previously. Select the files to be installed (check box) and press the bottom right icon "Send to NS". They will then appear on your Nintendo Switch screen.
+Check the necessary boxes and press + on your controller. Choose the "Micro-SD card" installation location.
+If your file is an .XCI a warning message from NCA signature may appear if this is the case do "I understand the risks". And finally validate the installation one last time
+
+## FR
 Tout d'abord les formats possible sont les .NSP; .XCI; NSZ; et XCZ (mais jamais utilisé). Les plus rapides à installer sont les .nsp et les plus légers sont les .nsz (mais plus long à s'installer). Vous devez tout d’abord vous procurez le jeu, pour ça magie magie.
 
 Installation sur PC  💻
