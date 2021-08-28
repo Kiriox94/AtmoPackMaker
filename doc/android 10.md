@@ -16,8 +16,8 @@ __I. Ce dont vous aurez besoin :__
 __II. Préparation de la SD :__
 - Télécharger la version [Tablette](https://download.switchroot.org/android-10/icosa-tab-20210510-rel.zip)
 - Décompressé le contenue de l'archive `icosa-tablet-20210510-rel.zip`
-- Copié les dossier bootloader et switchroot a la racine de la SD, de même pour l'archive lineage-17.1-20210205-UNOFFICIAL-foster_tab-signed.zip
-- Télécharger les [GAPPS](https://altushost-swe.dl.sourceforge.net/project/opengapps/arm64/20210206/open_gapps-arm64-10.0-nano-20210206.zip)
+- Copié les dossier bootloader et switchroot a la racine de la SD, de même pour l'archive `lineage-17.1-20210205-UNOFFICIAL-foster_tab-signed.zip`
+- Télécharger les [GAPPS](https://sourceforge.net/projects/opengapps/files/arm64/20210825/open_gapps-arm64-10.0-nano-20210825.zip/download)
 
 ⚠️ Si les liens ont des soucis / down, dite le moi dans #hack_switch et je le corrigerais
 
@@ -80,7 +80,7 @@ __III. Installation :__
 ![14](https://user-images.githubusercontent.com/50277488/130581693-ce506550-6cf8-49e5-9421-99211fd65b8d.png)
 
 ℹ️ Diverses erreurs vont apparaitre, ce qui est normal, lorsque `"Succesful"` est affiché en haut à gauche l'installation est terminée.
-- Revenez en arrière est installer `open_gapps-arm64-10.0-nano-20210206`.
+- Revenez en arrière est installer `open_gapps-arm64-10.0-nano-20210825.zip`.
 - Une fois terminé faite `"Reboot System"`.
 ℹ️ Le premier démarrage devrait prendre environ 3 minutes.
 
