@@ -1,0 +1,22 @@
+name: Node CI
+
+on: [push]
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  AtmoPack-Vanilla_Release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Pack
+        uses: actions/checkout@v3
+      - name: node index
+        run: |
+          npm ci
+          node index
+      - name: AtmoPack-Vanilla
+        uses: actions/upload-artifact@v3
+        with:
+          name: AtmoPack-Vanilla
+          path: AtmoPack-Vanilla.zip
