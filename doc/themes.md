@@ -27,8 +27,8 @@ Pour trouver des thèmes vous pouvez allez sur [Reddit](reddit.com/r/NXThemes) o
 
 __Nécessité :__ 
 - Une carte SD (logique, ) 
-- [NXThemes installer]([https://github.com/exelix11/SwitchThemeInjector/releases/download/](https://github.com/exelix11/SwitchThemeInjector/releases/latest/download/NXThemesInstaller.nro), prendre le .nro et le mettre dans /switch/Nxthemesinstaller
-- [Switch Themes Creator pour Windows]([https://github.com/exelix11/SwitchThemeInjector/releases](https://github.com/exelix11/SwitchThemeInjector/releases/latest/download/Release4.7.zip), prendre le “Release.zip“
+- [NXThemes installer](https://github.com/exelix11/SwitchThemeInjector/releases/latest/download/NXThemesInstaller.nro), prendre le .nro et le mettre dans /switch/Nxthemesinstaller
+- [Switch Themes Creator pour Windows](https://github.com/exelix11/SwitchThemeInjector/releases/latest/download/Release4.7.zip), prendre le “Release.zip“
 - Vous inquiétez pas les utilisateurs de MacOS ou Linux, il y a un créateur en ligne, 
 ou vous pouvez utilisez Wine: [/SwitchThemeInjector/v2/](https://exelix11.github.io/SwitchThemeInjector/v2/)
 - Un logiciel de gestion de photos.
