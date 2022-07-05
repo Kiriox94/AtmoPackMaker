@@ -35,6 +35,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./AtmoPack-Vanilla.zip
-          asset_name: AtmoPack-Vanilla_${{ github.ref_name }}.zip
+          asset_path: ./AtmoPack-Vanilla_Latest.zip
+          asset_name: AtmoPack-Vanilla_Latest.zip
           asset_content_type: application/zip
