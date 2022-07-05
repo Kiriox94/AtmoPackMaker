@@ -217,7 +217,7 @@ async function checkKey(key) {
         files = files.concat(release);
     };
 
-    files.push({ name: 'hekate_ipl.ini', url: 'https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/hekate_ipl.ini', version: 'latest' }, { name: 'exosphere.ini', url: 'https://nobuyoshi.red/exosphere.ini', version: 'latest' }, { name: 'sysmmc.txt', url: 'https://nobuyoshi.red/sysmmc.txt', version: 'latest' }, { name: 'emummc.txt', url: 'https://nobuyoshi.red/emummc.txt',  version: 'latest'}, { name: 'version.txt', url: 'https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/version.txt', version: 'B3-2.1.9' }, { name: 'boot.ini', url: 'https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/boot.ini', version: 'latest' }, { name: 'boot.dat', url: 'https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/boot.dat', version: 'latest' }, { name: 'hekate_keys.ini', url: 'https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/boot.dat', version: 'latest' });
+    files.push({ name: 'hekate_ipl.ini', url: 'https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/hekate_ipl.ini', version: 'latest' }, { name: 'exosphere.ini', url: 'https://nobuyoshi.red/exosphere.ini', version: 'latest' }, { name: 'sysmmc.txt', url: 'https://nobuyoshi.red/sysmmc.txt', version: 'latest' }, { name: 'emummc.txt', url: 'https://nobuyoshi.red/emummc.txt',  version: 'latest'}, { name: 'version.txt', url: 'https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/version.txt', version: 'B3-2.1.9' }, { name: 'boot.ini', url: 'https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/boot.ini', version: 'latest' }, { name: 'boot.dat', url: 'https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/boot.dat', version: 'latest' }, { name: 'hekate_keys.ini', url: 'https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/hekate_keys.ini', version: 'latest' });
 
     console.log(colors.warning('\nLes fichiers nécessaires à la création du pack sont en cours de téléchargement...'));
 
@@ -327,7 +327,7 @@ async function checkKey(key) {
 
         await fs.emptyDir('./temp/', { recursive: true });
         await fs.emptyDir('./SD/', { recursive: true });
-        console.log(colors.warning(`\nLe contenu des dossiers ${colors.default('temp')} et ${colors.default('SD')} ont étés supprimés.`), colors.success(`\nLe pack a été créé avec succès ${colors.default('(AtmoPack-Vanilla.zip \n Je ne ferais plus d\'aide aux utilisateurs sur l\'utilisation de ce pack. \n Si vous avez besoins d\'aide veuillez le faire sur le \n Discord de l\'îles des cocos \n  \n \Lien du discord : https://discord.gg/7PktcDKNAD)')}.`));
+        console.log(colors.warning(`\nLe contenu des dossiers ${colors.default('temp')} et ${colors.default('SD')} ont étés supprimés.`), colors.success(`\nLe pack a été créé avec succès ${colors.default('(AtmoPack-Vanilla.zip)')}.`));
     } catch (e) {
         console.log(colors.error(`[Copie et création du AtmoPack-Vanilla.zip] Une erreur est survenue: ${e}`));
     };
