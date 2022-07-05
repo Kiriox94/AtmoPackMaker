@@ -317,7 +317,7 @@ async function checkKey(key) {
         };
 
         console.log(colors.success('\nLe pack est en cours de création...\n'));
-        await ZIP.archiveFolder('./SD', './AtmoPack-Vanilla.zip');
+        await ZIP.archiveFolder('./SD', './AtmoPack-Vanilla_Latest.zip');
 
         console.log(colors.success('Voici le contenu du pack:'));
         for (let file of files) {
@@ -327,8 +327,8 @@ async function checkKey(key) {
 
         await fs.emptyDir('./temp/', { recursive: true });
         await fs.emptyDir('./SD/', { recursive: true });
-        console.log(colors.warning(`\nLe contenu des dossiers ${colors.default('temp')} et ${colors.default('SD')} ont étés supprimés.`), colors.success(`\nLe pack a été créé avec succès ${colors.default('(AtmoPack-Vanilla.zip)')}.`));
+        console.log(colors.warning(`\nLe contenu des dossiers ${colors.default('temp')} et ${colors.default('SD')} ont étés supprimés.`), colors.success(`\nLe pack a été créé avec succès ${colors.default('(AtmoPack-Vanilla_Latest.zip)')}.`));
     } catch (e) {
-        console.log(colors.error(`[Copie et création du AtmoPack-Vanilla.zip] Une erreur est survenue: ${e}`));
+        console.log(colors.error(`[Copie et création du AtmoPack-Vanilla_Latest.zip] Une erreur est survenue: ${e}`));
     };
 })();
