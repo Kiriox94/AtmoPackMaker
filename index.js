@@ -217,7 +217,7 @@ async function checkKey(key) {
         files = files.concat(release);
     };
 
-    files.push({ name: 'hekate_ipl.ini', url: 'https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/hekate_ipl.ini', version: 'latest' }, { name: 'exosphere.ini', url: 'https://nobuyoshi.red/exosphere.ini', version: 'latest' }, { name: 'sysmmc.txt', url: 'https://nobuyoshi.red/sysmmc.txt', version: 'latest' }, { name: 'emummc.txt', url: 'https://nobuyoshi.red/emummc.txt',  version: 'latest'}, { name: 'version.txt', url: 'https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/version.txt', version: 'B3-2.1.9' }, { name: 'boot.ini', url: 'https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/boot.ini', version: 'latest' }, { name: 'boot.dat', url: 'https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/boot.dat', version: 'latest' }, { name: 'hekate_keys.ini', url: 'https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/hekate_keys.ini', version: 'latest' });
+    files.push({ name: 'hekate_ipl.ini', url: 'https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/hekate_ipl.ini', version: 'latest' }, { name: 'exosphere.ini', url: 'https://nobuyoshi.red/exosphere.ini', version: 'latest' }, { name: 'sysmmc.txt', url: 'https://nobuyoshi.red/sysmmc.txt', version: 'latest' }, { name: 'emummc.txt', url: 'https://nobuyoshi.red/emummc.txt',  version: 'latest'}, { name: 'version.txt', url: 'https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/version.txt', version: 'B3-2.1.9' }, { name: 'boot.ini', url: 'https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/boot.ini', version: 'latest' }, { name: 'boot.dat', url: 'https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/boot.dat', version: 'latest' },);
 
     console.log(colors.warning('\nLes fichiers nécessaires à la création du pack sont en cours de téléchargement...'));
 
@@ -294,8 +294,6 @@ async function checkKey(key) {
         console.log(colors.success(`Le fichier ${colors.default('temp/boot.dat')} a été copié vers le dossier ${colors.default('SD')}.`));
         await fs.copy('./temp/boot.ini', './SD/boot.ini');
         console.log(colors.success(`Le fichier ${colors.default('temp/boot.ini')} a été copié vers le dossier ${colors.default('SD')}.`));
-        await fs.copy('./temp/hekate_keys.ini', './SD/bootloader/hekate_keys.ini');
-        console.log(colors.success(`Le fichier ${colors.default('temp/hekate_keys.ini')} a été copié vers le dossier ${colors.default('SD/bootloader')}.`));
 
         if (!fs.existsSync('./SD/atmosphere/hosts')) {
             await fs.mkdir('./SD/atmosphere/hosts');
