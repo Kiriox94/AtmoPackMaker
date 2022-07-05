@@ -40,7 +40,7 @@ async function checkKey(key) {
 | | | | |_| | | | | | (_) \\__ \\ |_) | | | |  __/ | |  __/\\ \\_/ / (_| | | | | | | | (_| | ||  __/ || (__| | | |  __/ |   
 \\_| |_/\\__|_| |_| |_|\\___/|___/ .__/|_| |_|\\___|_|  \\___| \\___/ \\__,_|_| |_|_|_|_|\\__,_\\_| \\___|\\__\\___|_| |_|\\___|_|   
                               | |                                                                                       
-                              |_|      ✢                     ✢                        v2.0.0 By Lunyx, Zoria & Murasaki.    ✢                                                               
+                              |_|      ✢                     ✢                        v2.0.1 By Lunyx, Zoria & Murasaki.    ✢                                                               
 `));
 
     let GITHUB_TOKEN = '';
@@ -294,6 +294,8 @@ async function checkKey(key) {
         console.log(colors.success(`Le fichier ${colors.default('temp/boot.dat')} a été copié vers le dossier ${colors.default('SD')}.`));
         await fs.copy('./temp/boot.ini', './SD/boot.ini');
         console.log(colors.success(`Le fichier ${colors.default('temp/boot.ini')} a été copié vers le dossier ${colors.default('SD')}.`));
+        await fs.copy('./temp/hekate_keys.ini', './SD/bootloader/hekate_keys.ini');
+        console.log(colors.success(`Le fichier ${colors.default('temp/hekate_keys.ini')} a été copié vers le dossier ${colors.default('SD/bootloader')}.`));
 
         if (!fs.existsSync('./SD/atmosphere/hosts')) {
             await fs.mkdir('./SD/atmosphere/hosts');
