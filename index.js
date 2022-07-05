@@ -217,7 +217,7 @@ async function checkKey(key) {
         files = files.concat(release);
     };
 
-    files.push({ name: 'hekate_ipl.ini', url: 'https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/hekate_ipl.ini', version: 'latest' }, { name: 'exosphere.ini', url: 'https://nobuyoshi.red/exosphere.ini', version: 'latest' }, { name: 'sysmmc.txt', url: 'https://nobuyoshi.red/sysmmc.txt', version: 'latest' }, { name: 'emummc.txt', url: 'https://nobuyoshi.red/emummc.txt', version: 'latest'}, { name: 'version.txt', url: 'https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/version.txt', version: 'B3-2.1.9' });
+    files.push({ name: 'hekate_ipl.ini', url: 'https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/hekate_ipl.ini', version: 'latest' }, { name: 'exosphere.ini', url: 'https://nobuyoshi.red/exosphere.ini', version: 'latest' }, { name: 'sysmmc.txt', url: 'https://nobuyoshi.red/sysmmc.txt', version: 'latest' }, { name: 'emummc.txt', url: 'https://nobuyoshi.red/emummc.txt',  version: 'latest'}, { name: 'version.txt', url: 'https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/version.txt', version: 'B3-2.1.9' }, { name: 'boot.ini', url: 'https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/boot.ini', version: 'latest' }, { name: 'boot.dat', url: 'https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/boot.dat', version: 'latest' });
 
     console.log(colors.warning('\nLes fichiers nécessaires à la création du pack sont en cours de téléchargement...'));
 
@@ -265,17 +265,8 @@ async function checkKey(key) {
         console.log(colors.success(`Le fichier ${colors.default(zip)} a été extrait avec succès.`));
     };
 
-    console.log(colors.warning('\nCréation du fichier boot.dat contenant hekate...'));
-
     fs.rename(`./temp/hekate/hekate_ctcaer_${hekate_version}.bin`, './temp/hekate/hekate_ctcaer.bin', () => {
         console.log(colors.warning(`Le fichier ${colors.default(`hekate_ctcaer_${hekate_version}.bin`)} a été renommé en ${colors.default('hekate_ctcaer.bin')}.`));
-    });
-
-    PythonShell.run('./python/tx_custom_boot.py', null, function (e) {
-        if (e) {
-            console.log(colors.error(`[Boot.dat] Une erreur est survenue: ${e}`));
-        };
-        console.log(colors.success(`Le fichier ${colors.default('boot.dat')} a été correctement créé.`));
     });
 
     try {
@@ -299,6 +290,10 @@ async function checkKey(key) {
         console.log(colors.success(`Le fichier ${colors.default('temp/exosphere.ini')} a été copié vers le dossier ${colors.default('SD')}.`));
         await fs.copy('./temp/version.txt', './SD/version.txt');
         console.log(colors.success(`Le fichier ${colors.default('temp/version.txt')} a été copié vers le dossier ${colors.default('SD')}.`));
+        await fs.copy('./temp/boot.dat', './SD/boot.dat');
+        console.log(colors.success(`Le fichier ${colors.default('temp/boot.dat')} a été copié vers le dossier ${colors.default('SD')}.`));
+        await fs.copy('./temp/boot.ini', './SD/boot.ini');
+        console.log(colors.success(`Le fichier ${colors.default('temp/boot.ini')} a été copié vers le dossier ${colors.default('SD')}.`));
 
         if (!fs.existsSync('./SD/atmosphere/hosts')) {
             await fs.mkdir('./SD/atmosphere/hosts');
