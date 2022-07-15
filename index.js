@@ -175,11 +175,6 @@ async function checkKey(key) {
             }] 
         }, 
         { 
-            link: 'liuervehc/nxmtp', desiredFiles: [{ 
-                exp: /^nxmtp\.nro$/, filename: 'nxmtp.nro' 
-            }] 
-        }, 
-        { 
             link: 'mrdude2478/TinWoo', desiredFiles: [{ 
                 exp: /^TinWoo-Installer\.zip$/, filename: 'TinWoo-Installer.zip' 
             }] 
