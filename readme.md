@@ -33,8 +33,9 @@ Thanks to the developer for their work
 - Meganukebmp (Switch_90DNS_tester) : https://github.com/meganukebmp/Switch_90DNS_tester
 - ~~PoloNX (sigpatch-downloader) : https://github.com/PoloNX/sigpatch-downloader~~
 - PoloNX (PayloadReboot) : https://github.com/PoloNX/PayloadReboot
+- PoloNX (PayloadReboot) : https://github.com/PoloNX/AtmoPackUpdater
 - DBI : https://github.com/rashevskyv/dbi
 - Sigpatch : https://github.com/THZoria/patches
-- HamletDuFromage (aio-switch-updater) : https://github.com/HamletDuFromage/aio-switch-updater
+~~- HamletDuFromage (aio-switch-updater) : https://github.com/HamletDuFromage/aio-switch-updater~~
 
 Special thanks to SciresM and all the Reswitched team who made this possible ^^
