@@ -156,11 +156,6 @@ async function checkKey(key) {
         //},
         // MModification of 30/07/2022 the repo of ITotalJustice has been DMCA
         { 
-            link: 'borntohonk/SigPatches', desiredFiles: [{ 
-                exp: /^SigPatches\.zip$/, filename: 'SigPatches.zip' 
-            }] 
-        },
-        { 
             link: 'WerWolv/EdiZon', desiredFiles: [{ 
                 exp: /^EdiZon\.nro$/, filename: 'EdiZon.nro' 
             }] 
@@ -281,10 +276,11 @@ async function checkKey(key) {
         console.log(colors.success(`Le fichier ${colors.default('temp/hekate/hekate_ctcaer.bin')} a été copié vers le dossier ${colors.default('SD (payload.bin)')}.`));
         await fs.copy('./temp/hekate/hekate_ctcaer.bin', './SD/atmosphere/reboot_payload.bin');
         console.log(colors.success(`Le fichier ${colors.default('temp/hekate/hekate_ctcaer.bin')} a été copié vers le dossier ${colors.default('SD/atmosphere (reboot_payload.bin)')}.`));
-        await fs.copy('./temp/SigPatches/atmosphere', './SD/atmosphere');
-        console.log(colors.success(`Le fichier ${colors.default('temp/SigPatches/atmosphere')} a été copié vers le dossier ${colors.default('SD/atmosphere')}.`));
-        await fs.copy('./temp/SigPatches/bootloader', './SD/bootloader');
-        console.log(colors.success(`Le fichier ${colors.default('temp/SigPatches/bootloader')} a été copié vers le dossier ${colors.default('SD/bootloader')}.`));
+        //await fs.copy('./temp/SigPatches/atmosphere', './SD/atmosphere');
+        //console.log(colors.success(`Le fichier ${colors.default('temp/SigPatches/atmosphere')} a été copié vers le dossier ${colors.default('SD/atmosphere')}.`));
+        //await fs.copy('./temp/SigPatches/bootloader', './SD/bootloader');
+        //console.log(colors.success(`Le fichier ${colors.default('temp/SigPatches/bootloader')} a été copié vers le dossier ${colors.default('SD/bootloader')}.`));
+        console.log(colors.success(`\nNintendo à attaqué le repo github d'iTotalJustice, ce dernier à été" retiré du script pour le moment, nous nous excusons pour la gène occasioné.`));
         await fs.copy('./temp/hekate_ipl.ini', './SD/bootloader/hekate_ipl.ini');
         console.log(colors.success(`Le fichier ${colors.default('temp/hekate_ipl.ini')} a été copié vers le dossier ${colors.default('SD/bootloader')}.`));
         await fs.copy('./temp/exosphere.ini', './SD/exosphere.ini');
