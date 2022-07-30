@@ -35,7 +35,7 @@ Thanks to the developer for their work
 - PoloNX (PayloadReboot) : https://github.com/PoloNX/PayloadReboot
 - PoloNX (AtmoPackUpdater) : https://github.com/PoloNX/AtmoPackUpdater
 - DBI : https://github.com/rashevskyv/dbi
-- Sigpatch : https://github.com/THZoria/patches
+- ~~Sigpatch : https://github.com/THZoria/patches~~
 ~~- HamletDuFromage (aio-switch-updater) : https://github.com/HamletDuFromage/aio-switch-updater~~
 
 Special thanks to SciresM and all the Reswitched team who made this possible ^^
