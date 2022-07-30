@@ -149,11 +149,17 @@ async function checkKey(key) {
                 exp: /^fusee\.bin$/, filename: 'fusee.bin' 
             }] 
         }, 
+        //{ 
+        //    link: 'ITotalJustice/patches', desiredFiles: [{ 
+        //        exp: /^SigPatches\.zip$/, filename: 'SigPatches.zip' 
+        //    }] 
+        //},
+        // MModification of 30/07/2022 the repo of ITotalJustice has been DMCA
         { 
-            link: 'ITotalJustice/patches', desiredFiles: [{ 
+            link: 'borntohonk/SigPatches', desiredFiles: [{ 
                 exp: /^SigPatches\.zip$/, filename: 'SigPatches.zip' 
             }] 
-        }, 
+        },
         { 
             link: 'WerWolv/EdiZon', desiredFiles: [{ 
                 exp: /^EdiZon\.nro$/, filename: 'EdiZon.nro' 
