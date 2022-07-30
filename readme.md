@@ -27,15 +27,12 @@ Thanks to the developer for their work
 - J-D-K (JKSV) : https://github.com/J-D-K/JKSV
 - Liuervehc (nxmtp) : https://github.com/liuervehc/nxmtp/
 - Joel16 (NX-Shell) : https://github.com/joel16/NX-Shell
-- ~~Adubbz (Tinfoil) : https://github.com/Adubbz/Tinfoil (Closed Source)~~
 - Mrdude2478 (TinWoo) : https://github.com/mrdude2478/TinWoo/
 - XorTroll (Goldleaf) : https://github.com/XorTroll/Goldleaf
 - Meganukebmp (Switch_90DNS_tester) : https://github.com/meganukebmp/Switch_90DNS_tester
-- ~~PoloNX (sigpatch-downloader) : https://github.com/PoloNX/sigpatch-downloader~~
 - PoloNX (PayloadReboot) : https://github.com/PoloNX/PayloadReboot
 - PoloNX (AtmoPackUpdater) : https://github.com/PoloNX/AtmoPackUpdater
 - DBI : https://github.com/rashevskyv/dbi
-- ~~Sigpatch : https://github.com/THZoria/patches~~
 - HamletDuFromage (aio-switch-updater) : https://github.com/HamletDuFromage/aio-switch-updater
 
 Special thanks to SciresM and all the Reswitched team who made this possible ^^
