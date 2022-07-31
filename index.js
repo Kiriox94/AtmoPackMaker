@@ -149,15 +149,9 @@ async function checkKey(key) {
                 exp: /^fusee\.bin$/, filename: 'fusee.bin' 
             }] 
         }, 
-        //{ 
-        //    link: 'PHRetroGamers/signature_gpd', desiredFiles: [{ 
-        //        exp: /^signature_gpd\.zip$/, filename: 'signature_gpd.zip' 
-        //    }] 
-        //},
-        //Remove the signature_gpd
         { 
-            link: 'THZoria/Tiramisu', desiredFiles: [{ 
-                exp: /^Tiramisu\.zip$/, filename: 'Tiramisu.zip' 
+            link: 'PHRetroGamers/signature_gpd', desiredFiles: [{ 
+                exp: /^signature_gpd\.zip$/, filename: 'signature_gpd.zip' 
             }] 
         },
         { 
