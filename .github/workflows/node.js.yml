@@ -3,6 +3,7 @@ on: [push]
 
 permissions: 
  packages: read
+ repository-projects: read
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
