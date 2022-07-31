@@ -154,6 +154,12 @@ async function checkKey(key) {
                 exp: /^signature_gpd\.zip$/, filename: 'signature_gpd.zip' 
             }] 
         },
+        //Test
+        { 
+            link: 'THZoria/Tiramisu', desiredFiles: [{ 
+                exp: /^Tiramisu\.zip$/, filename: 'Tiramisu.zip' 
+            }] 
+        },
         { 
             link: 'WerWolv/EdiZon', desiredFiles: [{ 
                 exp: /^EdiZon\.nro$/, filename: 'EdiZon.nro' 
