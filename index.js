@@ -275,10 +275,10 @@ async function checkKey(key) {
         console.log(colors.success(`Le fichier ${colors.default('temp/hekate/hekate_ctcaer.bin')} a été copié vers le dossier ${colors.default('SD (payload.bin)')}.`));
         await fs.copy('./temp/hekate/hekate_ctcaer.bin', './SD/atmosphere/reboot_payload.bin');
         console.log(colors.success(`Le fichier ${colors.default('temp/hekate/hekate_ctcaer.bin')} a été copié vers le dossier ${colors.default('SD/atmosphere (reboot_payload.bin)')}.`));
-        await fs.copy('./temp/Tiramisu/atmosphere', './SD/atmosphere');
-        console.log(colors.success(`Le fichier ${colors.default('temp/Tiramisu/atmosphere')} a été copié vers le dossier ${colors.default('SD/atmosphere')}.`));
-        await fs.copy('./temp/Tiramisu/bootloader', './SD/bootloader');
-        console.log(colors.success(`Le fichier ${colors.default('temp/Tiramisu/bootloader')} a été copié vers le dossier ${colors.default('SD/bootloader')}.`));
+        await fs.copy('./temp/signature_gpd/atmosphere', './SD/atmosphere');
+        console.log(colors.success(`Le fichier ${colors.default('temp/signature_gpd/atmosphere')} a été copié vers le dossier ${colors.default('SD/atmosphere')}.`));
+        await fs.copy('./temp/signature_gpd/bootloader', './SD/bootloader');
+        console.log(colors.success(`Le fichier ${colors.default('temp/signature_gpd/bootloader')} a été copié vers le dossier ${colors.default('SD/bootloader')}.`));
         console.log(colors.success(`Nintendo à attaqué le repo github d'iTotalJustice, ce dernier à été" retiré du script pour le moment, nous nous excusons pour la gène occasioné.`));
         await fs.copy('./temp/hekate_ipl.ini', './SD/bootloader/hekate_ipl.ini');
         console.log(colors.success(`Le fichier ${colors.default('temp/hekate_ipl.ini')} a été copié vers le dossier ${colors.default('SD/bootloader')}.`));
