@@ -1,9 +1,12 @@
 name: Node CI
-
 on: [push]
+
+permissions: 
+ packages: read
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 
 jobs:
   AtmoPack-Vanilla_Release:
