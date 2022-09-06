@@ -1,4 +1,4 @@
-- AtmoPack-Vanilla v2.2.5 -
+- AtmoPack-Vanilla v2.2.6 -
 
 
 
