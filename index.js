@@ -174,9 +174,14 @@ async function checkKey(key) {
                 exp: /^ftpd\.nro$/, filename: 'ftpd.nro' 
             }] 
         }, 
+        //{ 
+        //    link: 'mrdude2478/TinWoo', desiredFiles: [{ 
+        //        exp: /^TinWoo-Installer\.zip$/, filename: 'TinWoo-Installer.zip' 
+        //    }] 
+        //},
         { 
-            link: 'mrdude2478/TinWoo', desiredFiles: [{ 
-                exp: /^TinWoo-Installer\.zip$/, filename: 'TinWoo-Installer.zip' 
+            link: 'dezem/AtmoXL-Titel-Installer', desiredFiles: [{ 
+                exp: /^AtmoXL-Titel-Installer.zip$/, filename: 'AtmoXL-Titel-Installer.zip' 
             }] 
         },
          { 
@@ -300,8 +305,8 @@ async function checkKey(key) {
         console.log(colors.success(`Le fichier ${colors.default('temp/sysmmc.txt')} a été copié vers le dossier ${colors.default('SD/atmosphere/hosts')}.`));
         await fs.copy('./temp/emummc.txt', './SD/atmosphere/hosts/emummc.txt');
         console.log(colors.success(`Le fichier ${colors.default('temp/emummc.txt')} a été copié vers le dossier ${colors.default('SD/atmosphere/hosts')}.`));
-        await fs.copy('./temp/TinWoo-Installer/', './SD/');
-        console.log(colors.success(`Le contenu du dossier ${colors.default('temp/TinWoo-Installer')} a été copié vers le dossier ${colors.default('SD')}.`));
+        await fs.copy('./temp/AtmoXL-Titel-Installer/', './SD/');
+        console.log(colors.success(`Le contenu du dossier ${colors.default('temp/AtmoXL-Titel-Installer')} a été copié vers le dossier ${colors.default('SD')}.`));
 
         let homebrews = await fs.readdir(output_folder).then(files => { return files.filter(f => f.endsWith('nro')) });
         
