@@ -16,7 +16,12 @@ Without bootlogo, source or homebrew modification
 - [AtmoPack-Full](https://github.com/Pikatsuto/AtmoPack-Full) which is an alternative to AtmoPack-Vanilla with overlays and additional useful modules
 - [AtmosphereFullFetcher-cli](https://github.com/Pikatsuto/AtmosphereFullFetcher-cli) which is the compiler of AtmoPack-Full
 
-Thanks to the developer for their work
+###  ⚠️ Warning
+
+We do not condone the theft of open source content, the violation of licenses and the resale of open source content
+If you are using stolen or sold content based on the AtmoPack-Vanilla like the one from Classic Gamer, the latter is a scam. We invite you to use a real pack like the AtmoPack-Vanilla, Sblerky, LSPack or the one from Deejay
+
+### Thanks to the developer for their work
 
 - SciresM (Atmosphère & DayBreak & Reboot to payload) : https://github.com/Atmosphere-NX/Atmosphere
 - SciresM & FlagBrew (Checkpoint) : https://github.com/FlagBrew/Checkpoint, https://github.com/SciresM/Checkpoint/
