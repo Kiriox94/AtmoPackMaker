@@ -16,10 +16,47 @@ Without bootlogo, source or homebrew modification
 - [AtmoPack-Full](https://github.com/Pikatsuto/AtmoPack-Full) which is an alternative to AtmoPack-Vanilla with overlays and additional useful modules
 - [AtmosphereFullFetcher-cli](https://github.com/Pikatsuto/AtmosphereFullFetcher-cli) which is the compiler of AtmoPack-Full
 
-###  ⚠️ Warning
+### Future
+I started the switch hack in 2018, at the time we only had the paper clips to launch the RCM mode and tons of .zip and other to download to be able to launch Atmosphere which at the time had no release and launched only from Hekate.
 
-We do not condone the theft of open source content, the violation of licenses and the resale of open source content
-If you are using stolen or sold content based on the AtmoPack-Vanilla like the one from Classic Gamer, the latter is a scam. We invite you to use a real pack like the AtmoPack-Vanilla, Sblerky, LSPack or the one from Deejay
+A very famous pack called Kosmos was born and was linked to the SDSetup project.
+
+This pack eventually died out and new packs immersed such as deepsea, the deejay pack and many other packs.
+But they were all either too heavy, or had custom logos imposed on them, and of course a large majority didn't know how to remove them.
+I then proposed a pack, vanilla, clean, without bootlogo, theme or other imposed graphic element.
+
+At that time, the pack was made by hand, from A to Z, whether it was the download of all the elements and their integration or the configuration of the pack.
+And then finally in 2020 with the help of the PoyoNX team and Nobuyoshy the AtmoPack-Vailla Fetcher was born, a script developed in Node JS by Lunyx and Murasaki
+
+It retrieves all the sources, puts them in the right folders and generates a ready-to-use archive.
+
+This facilitated the implementation and distribution of the pack, 2020 and 2021 were pivotal years on the implementation of this Fetcher that we proposed to all as modular to create packs.
+
+I thought that the project would not go any further and that we would just continue to generate the packs by doing a node index.js command as anyone would do if they got the project from github.
+
+But in 2022 thanks to the help of a developer friend, workflows, a powerful tool, but that I didn't master at all, allowed us to improve the automation of the pack
+
+In 2 commands from a pc or a phone the pack was generated and put online on github.
+
+Then followed PoloNX from PoyoNX who worked hard on a project of homebrew alternative to AIO Switch Updater modulable and adapted to the AtmoPack-Vanilla to allow a simple and effective update of the latter which was then taken over and improved by LS Atelier for the LSPack
+
+We are now in 2023 and a lot has happened since the AtmoPack-Vanilla was created.
+I think I've done the turn on the creation of Pack and would like to focus on other project always on the modding of console but not that.
+This pack was made without pretention and only for me and some people on Discord
+I'm not a developer, I'm just tinkering and know how to manage even if we were several to work on it to make it better to
+As new people used it.
+
+This pack was made unpretentiously and only for me and some people on Discord
+I'm not a developer, I'm a tinkerer and I know how to manage even if we were several to work on it to make it better in
+As new people used it.
+
+
+I had already more or less made this choice towards the end of 2022 and had discussed it with Shadow256 and NightWolf from LS Atelier, this pack was cool, but everything has an end and this is it for me.
+
+Thank you all for using my pack, and let's work together for future cool projects ^^
+
+Zoria / SaoriYuki
+
 
 ### Thanks to the developer for their work
 
