@@ -13,8 +13,6 @@ Without bootlogo, source or homebrew modification
 
 ### Project Link
 - [AtmosphereVanillaFetcher-cli](https://github.com/Lunyyx/AtmosphereVanillaFetcher-cli) which is the compiler of AtmoPack-Vanilla
-- [AtmoPack-Full](https://github.com/Pikatsuto/AtmoPack-Full) which is an alternative to AtmoPack-Vanilla with overlays and additional useful modules
-- [AtmosphereFullFetcher-cli](https://github.com/Pikatsuto/AtmosphereFullFetcher-cli) which is the compiler of AtmoPack-Full
 
 ### Future
 I started the switch hack in 2018, at the time we only had the paper clips to launch the RCM mode and tons of .zip and other to download to be able to launch Atmosphere which at the time had no release and launched only from Hekate.
