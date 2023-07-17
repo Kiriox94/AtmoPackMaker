@@ -71,6 +71,7 @@ Zoria / SaoriYuki
 - XorTroll (Goldleaf) : https://github.com/XorTroll/Goldleaf
 - Meganukebmp (Switch_90DNS_tester) : https://github.com/meganukebmp/Switch_90DNS_tester
 - PoloNX (PayloadReboot) : https://github.com/PoloNX/PayloadReboot
+- PoloNX (SimpleModDownloader) : https://github.com/PoloNX/SimpleModDownloader
 - PoloNX (AtmoPackUpdater) : https://github.com/PoloNX/AtmoPackUpdater
 - DBI : https://github.com/rashevskyv/dbi
 - HamletDuFromage (aio-switch-updater) : https://github.com/HamletDuFromage/aio-switch-updater
