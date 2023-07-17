@@ -32,6 +32,5 @@ Without bootlogo, source or homebrew modification
 - PoloNX (SimpleModDownloader) : https://github.com/PoloNX/SimpleModDownloader
 - PoloNX (AtmoPackUpdater) : https://github.com/PoloNX/AtmoPackUpdater
 - DBI : https://github.com/rashevskyv/dbi
-- HamletDuFromage (aio-switch-updater) : https://github.com/HamletDuFromage/aio-switch-updater
-
+- 
 Special thanks to SciresM and all the Reswitched team who made this possible ^^
