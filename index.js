@@ -190,11 +190,11 @@ async function checkKey(key) {
                 exp: /^PayloadReboot\.nro$/, filename: 'PayloadReboot.nro' 
             }] 
         },
-       // { 
-       //     link: 'PoloNX/AtmoPackUpdater', desiredFiles: [{ 
-       //         exp: /^AtmoPackUpdater\.nro$/, filename: 'AtmoPackUpdater.nro' 
-       //     }] 
-       // },
+        { 
+            link: 'PoloNX/AtmoPackUpdater', desiredFiles: [{ 
+                exp: /^AtmoPackUpdater\.nro$/, filename: 'AtmoPackUpdater.nro' 
+            }] 
+        },
          
         { 
             link: 'meganukebmp/Switch_90DNS_tester', desiredFiles: [{ 
