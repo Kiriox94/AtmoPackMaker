@@ -31,6 +31,7 @@ Without bootlogo, source or homebrew modification
 - PoloNX (PayloadReboot) : https://github.com/PoloNX/PayloadReboot
 - PoloNX (SimpleModDownloader) : https://github.com/PoloNX/SimpleModDownloader
 - PoloNX (AtmoPackUpdater) : https://github.com/PoloNX/AtmoPackUpdater
-- DBI : https://github.com/rashevskyv/dbi
-- 
-Special thanks to SciresM and all the Reswitched team who made this possible ^^
+- (rashevskyv) DBI : https://github.com/rashevskyv/dbi
+- (iTotalJustice) sys-patch : https://github.com/ITotalJustice/sys-patch
+
+- Special thanks to SciresM and all the Reswitched team who made this possible ^^
