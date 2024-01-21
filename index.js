@@ -7,8 +7,12 @@ const { PythonShell } = require('python-shell');
 const moment = require('moment');
 const qoa = require('qoa');
 const ZIP = require('zip-lib');
+const path = require("path")
+const { exec } = require('child_process');
 require('dotenv').config();
 moment.locale('fr');
+
+const config  = require("./config.json")
 
 const colors = {
     'default': (text) => { return chalk.hex('#2C3579')(text); },
@@ -29,6 +33,10 @@ async function checkKey(key) {
         process.exit();
     }
 };
+
+function stringToRegex(inputString) {
+    return new RegExp(`^${inputString.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`);
+}
 
 (async () => {
     console.clear();
@@ -83,6 +91,13 @@ async function checkKey(key) {
         console.log(colors.warning('Dossier contenant ce qui va être utilisé pour créer le pack (SD) créé.'));
     };
 
+    if(config.startuplogoPath != null || "") {
+        exec("python -m pip install Pillow")
+        exec("python -m pip install ips.py")
+    }else if(config.splashscreenPath != null || "") {
+        exec("python -m pip install Pillow")
+    }
+
     async function getRelease(link, desiredFiles) {
         try {
             let release = await fetch(`https://api.github.com/repos/${link}/releases`, { headers: { Authorization: `token ${GITHUB_TOKEN}` } });
@@ -118,9 +133,9 @@ async function checkKey(key) {
             for (let asset of assets) {
                 const { name, browser_download_url } = asset;
                 for (let file of desiredFiles) {
-                    const { exp, filename } = file;
+                    const { exp, filename, directory } = file;
                     if (exp.test(name) && name.replace(name.match(exp)[0], '') == '') {
-                        desiredFilesArray.push({ name: filename, url: browser_download_url, version: release.tag_name });
+                        desiredFilesArray.push({ name: filename, url: browser_download_url, version: release.tag_name, directory: directory });
                         break;
                     };
                 };
@@ -153,54 +168,13 @@ async function checkKey(key) {
             link: 'ITotalJustice/sys-patch', desiredFiles: [{ 
                 exp: /^sys-patch\.zip$/, filename: 'sys-patch.zip' 
             }] 
-        },
-        { 
-            link: 'WerWolv/EdiZon', desiredFiles: [{ 
-                exp: /^EdiZon\.nro$/, filename: 'EdiZon.nro' 
-            }] 
-        }, 
-        { 
-            link: 'XorTroll/Goldleaf', desiredFiles: [{ 
-                exp: /^Goldleaf\.nro$/, filename: 'Goldleaf.nro' 
-            }] 
-        }, 
-        { 
-            link: 'J-D-K/JKSV', desiredFiles: [{ 
-                exp: /^JKSV\.nro$/, filename: 'JKSV.nro' 
-            }] 
-        }, 
-        { 
-            link: 'mtheall/ftpd', desiredFiles: [{ 
-                exp: /^ftpd\.nro$/, filename: 'ftpd.nro' 
-            }] 
-        }, 
-       // { 
-       //     link: 'mrdude2478/TinWoo', desiredFiles: [{ 
-       //         exp: /^TinWoo-Installer\.zip$/, filename: 'TinWoo-Installer.zip'
-       //     }] 
-       //  },
-         { 
-            link: 'rashevskyv/dbi', desiredFiles: [{ 
-                exp: /^DBI\.nro$/, filename: 'DBI.nro' 
-            }] 
-        },
-         
-         { 
-            link: 'PoloNX/PayloadReboot', desiredFiles: [{ 
-                exp: /^PayloadReboot\.nro$/, filename: 'PayloadReboot.nro' 
-            }] 
-        },
-        { 
-            link: 'PoloNX/AtmoPackUpdater', desiredFiles: [{ 
-                exp: /^AtmoPackUpdater\.nro$/, filename: 'AtmoPackUpdater.nro' 
-            }] 
-        },
-         
-        { 
-            link: 'meganukebmp/Switch_90DNS_tester', desiredFiles: [{ 
-                exp: /^Switch_90DNS_tester\.nro$/, filename: 'Switch_90DNS_tester.nro' 
-            }] 
         }];
+
+    for(let repo of config.githubFiles) {
+        const { link, desiredFiles } = repo;
+        desiredFiles.map(f => f.exp = (f.exp == null || "") ? stringToRegex(f.filename) : f.exp)
+        desiredReleases.push({link: link, desiredFiles: desiredFiles})
+    }
 
     let files = [];
 
@@ -212,8 +186,14 @@ async function checkKey(key) {
         files = files.concat(release);
     };
 
-    files.push({ name: 'hekate_ipl.ini', url: 'https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/hekate_ipl.ini', version: 'latest' }, { name: 'exosphere.ini', url: 'https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/exosphere.ini', version: 'latest' }, { name: 'repair.ini', url: 'https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/repair.ini', version: 'latest' }, { name: 'sysmmc.txt', url: 'https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/sysmmc.txt', version: 'latest' }, { name: 'emummc.txt', url: 'https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/emummc.txt',  version: 'latest'}, { name: 'version.txt', url: 'https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/version.txt', version: 'v2.6.2' }, { name: 'boot.ini', url: 'https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/boot.ini', version: 'latest' }, { name: 'boot.dat', url: 'https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/boot.dat', version: 'latest' },);
+    if(config.startuplogoPath != null || "") files.push({ name: "gen_patches.py", url: "https://raw.githubusercontent.com/friedkeenan/switch-logo-patcher/master/gen_patches.py", version: "latest", directory: "../python"});
+    if(config.splashscreenPath != null || "") files.push({ name: "insert_splash_screen.py", url: "https://github.com/Atmosphere-NX/Atmosphere/raw/master/utilities/insert_splash_screen.py", version: "latest", directory: "../python"});
 
+    if(config.onlineFiles.length > 0) files.push(        
+        config.onlineFiles.map(f => {
+            if(f.version == null) f.version = "latest"
+        })
+    )
     console.log(colors.warning('\nLes fichiers nécessaires à la création du pack sont en cours de téléchargement...'));
 
     for (let file of files) {
@@ -222,7 +202,6 @@ async function checkKey(key) {
 
         if (name == 'hekate.zip')
             hekate_version = version.replace('v', '');
-        
         let downloader = new Downloader({ url: url, directory: output_folder, filename: name, cloneFiles: false, maxAttempts: 3,
             onBeforeSave: () => {
                 console.log(colors.warning(`\nLe fichier ${name} (${version}) est en cours de téléchargement...`));
@@ -306,15 +285,26 @@ async function checkKey(key) {
         // console.log(colors.success(`Le contenu du dossier ${colors.default('temp/TinWoo-Installer')} a été copié vers le dossier ${colors.default('SD')}.`));
         console.log(colors.success(`Le développeur de TinWoo à retiré le repo github de TinWoo`));
 
-        let homebrews = await fs.readdir(output_folder).then(files => { return files.filter(f => f.endsWith('nro')) });
+        // let homebrews = await fs.readdir(output_folder).then(files => { return files.filter(f => f.endsWith('nro')) });
         
-        for (let homebrew of homebrews) {
-            await fs.copy(`./temp/${homebrew}`, `./SD/switch/${homebrew}`);
-            console.log(colors.success(`Le contenu du dossier ${colors.default(`temp/${homebrew}`)} a été copié vers le dossier ${colors.default('SD/switch')}.`));
-        };
+        // for (let homebrew of homebrews) {
+        //     await fs.copy(`./temp/${homebrew}`, `./SD/switch/${homebrew}`);
+        //     console.log(colors.success(`Le contenu du dossier ${colors.default(`temp/${homebrew}`)} a été copié vers le dossier ${colors.default('SD/switch')}.`));
+        // };
+
+        for (let file of files) {
+            if(file.directory != null || "") {
+                fs.copy(path.join("./temp", file.name), path.join("./SD", file.directory, file.name))
+            }
+        }
+
+        await fs.copy("./localFiles", "./SD")
+
+        if(config.startuplogoPath != null || "") await PythonShell.run('./python/gen_patches.py', {args: ["./SD/atmosphere/exefs_patches/startup_logo", config.startuplogoPath]})
+        if(config.splashscreenPath != null || "") await PythonShell.run('./python/gen_patches.py', {args: [config.splashscreenPath, "./SD/atmosphere/package3"]})
 
         console.log(colors.success('\nLe pack est en cours de création...\n'));
-        await ZIP.archiveFolder('./SD', './AtmoPack-Vanilla_Latest.zip');
+        await ZIP.archiveFolder('./SD', `./${config.packName}.zip`);
 
         console.log(colors.success('Voici le contenu du pack:'));
         for (let file of files) {
@@ -324,8 +314,8 @@ async function checkKey(key) {
 
         await fs.emptyDir('./temp/', { recursive: true });
         await fs.emptyDir('./SD/', { recursive: true });
-        console.log(colors.warning(`\nLe contenu des dossiers ${colors.default('temp')} et ${colors.default('SD')} ont étés supprimés.`), colors.success(`\nLe pack a été créé avec succès ${colors.default('(AtmoPack-Vanilla_Latest.zip)')}.`));
+        console.log(colors.warning(`\nLe contenu des dossiers ${colors.default('temp')} et ${colors.default('SD')} ont étés supprimés.`), colors.success(`\nLe pack a été créé avec succès ${colors.default(`(${config.packName}.zip)`)}.`));
     } catch (e) {
-        console.log(colors.error(`[Copie et création du AtmoPack-Vanilla_Latest.zip] Une erreur est survenue: ${e}`));
+        console.log(colors.error(`[Copie et création de ${config.packName}.zip] Une erreur est survenue: ${e}`));
     };
 })();

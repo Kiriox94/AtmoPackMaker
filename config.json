@@ -1,0 +1,36 @@
+{
+    "packName": "Eevee Pack",
+    "repoUrl": "",
+    "githubFiles": [
+        { 
+            "link": "rashevskyv/dbi", "desiredFiles": [{
+                "filename": "DBI.nro",
+                "directory": "switch"
+            }]
+        },
+        { 
+            "link": "XorTroll/Goldleaf", "desiredFiles": [{
+                "filename": "Goldleaf.nro",
+                "directory": "switch"
+            }]
+        },
+        { 
+            "link": "mtheall/ftpd", "desiredFiles": [{
+                "filename": "ftpd.nro",
+                "directory": "switch"
+            }]
+        }
+    ],
+    "onlineFiles": [
+        { "name": "hekate_ipl.ini", "url": "https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/hekate_ipl.ini", "version": "latest" }, 
+        { "name": "exosphere.ini", "url": "https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/exosphere.ini", "version": "latest" }, 
+        { "name": "repair.ini", "url": "https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/repair.ini", "version": "latest" }, 
+        { "name": "sysmmc.txt", "url": "https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/sysmmc.txt", "version": "latest" }, 
+        { "name": "emummc.txt", "url": "https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/emummc.txt",  "version": "latest"}, 
+        { "name": "version.txt", "url": "https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/version.txt", "version": "v2.6.2" }, 
+        { "name": "boot.ini", "url": "https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/boot.ini", "version": "latest" }, 
+        { "name": "boot.dat", "url": "https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/boot.dat", "version": "latest" }
+    ],
+    "startuplogoPath": "./assets/logo.png",
+    "splashscreenPath": "./assets/splashscreen.png"
+}
