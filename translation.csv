@@ -1,0 +1,35 @@
+fr;en
+[CheckKey] Une erreur est survenue: {0};[CheckKey] An error occurred: {0}
+La langue actuellement sélectionnée ({0}) n'est pas prise en charge, la langue par défaut ({1}) a été sélectionnée.;The currently selected language ({0}) is not supported, the default language ({1}) has been selected.
+Un token GitHub est nécessaire.;A GitHub token is necessary.
+Dossier temporaire (temp) créé.;Temporary folder (temp) created.
+Dossier contenant ce qui va être utilisé pour créer le pack (SD) créé.;Folder containing what will be used to create the pack (SD) created.
+Dossier contenant les scripts Python (python) créé.;Folder containing Python scripts (python) created.
+Les modules Python ont correctement été installés.;Python modules have been successfully installed.
+Le logo de démarrage n'a pas la taille requise (308x350);The startup logo does not have the required size (308x350).
+Le splash screen n'a pas la taille requise (1280x720);The splash screen does not have the required size (1280x720).
+https://api.github.com/repos/{0}/releases retourne une erreur 404.;https://api.github.com/repos/{0}/releases returns a 404 error.
+La clé d'accès à l'API de GitHub est erronée, vous allez devoir recommencer une configuration.;"The GitHub API access key is incorrect, you will need to restart the configuration."""
+Vous avez dépassé le nombre de requêtes maximum par heure, vous devez attendre {0} avant de pouvoir réutiliser le programme.;"You have exceeded the maximum number of requests per hour, you must wait {0} before being able to reuse the program."""
+Il n'y a pas de fichiers sur la dernière version de {0}.;There are no files on the latest version of {0}.
+[GetRelease] Une erreur est survenue: {0};[GetRelease] An error occurred: {0}
+Récupération de la dernière version des dépôts GitHub en cours...\j;Retrieving the latest version of GitHub repositories...\j
+\jLes fichiers nécessaires à la création du pack sont en cours de téléchargement...;\jThe files needed to create the pack are being downloaded...
+Le fichier {0} a été téléchargé avec succès.;File {0} has been successfully downloaded.
+Le fichier {0} n'a pas pu être téléchargé. {1};File {0} could not be downloaded. {1}
+\jTous les fichiers nécessaires ont été téléchargés.;\jAll necessary files have been downloaded.
+\jPréparation du dossier SD...\j;\jPreparing the SD folder...\j
+Le fichier {0} a été extrait avec succès.;File {0} has been successfully extracted.
+Le fichier {0} a été renommé en {1}.;File {0} has been renamed to {1}.
+Le fichier {0} a été copié vers le dossier {1}.;File {0} has been copied to folder {1}.
+Les fichiers présents dans le dossier local (localFiles) ont été copiés vers le dossier principal (SD).;Files present in the local folder (localFiles) have been copied to the main folder (SD).
+La configuration pour la mise à jour automatique du pack a été chargée.;The configuration for automatic pack update has been loaded.
+Lancement de l'exécution des scripts Python.;Launching the execution of Python scripts.
+Tous les scripts Python ont été exécutés avec succès ({0}).;All Python scripts have been successfully executed ({0}).
+\jLe pack est en cours de création...\j;\jThe pack is currently being created...\j
+Voici le contenu du pack:;Here is the content of the pack:
+\jLe contenu des dossiers {0} et {1} ont été supprimés.;\jThe content of folders {0} and {1} has been deleted.
+\jLe pack a été créé avec succès {0}.;\jThe pack has been successfully created {0}.
+[Copie et création de {0}.zip] Une erreur est survenue: {1};[Copy and creation of {0}.zip] An error occurred: {1}
+{0} récupéré.;{0} recovered.
+\jLe fichier {0} ({1}) est en cours de téléchargement...;\The file {0} ({1}) is currently downloading...

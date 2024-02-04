@@ -9,10 +9,15 @@ const qoa = require('qoa');
 const ZIP = require('zip-lib');
 const path = require("path")
 const { exec } = require('child_process');
+const sizeOf = require('image-size');
 require('dotenv').config();
 moment.locale('fr');
 
 const config  = require("./config.json")
+const defaultLanguage = "en";
+
+const useStartuplogo = config.startuplogoPath !== null && config.startuplogoPath !== ""
+const useSplashscreen = config.splashscreenPath !== null && config.splashscreenPath !== ""
 
 const colors = {
     'default': (text) => { return chalk.hex('#2C3579')(text); },
@@ -29,7 +34,7 @@ async function checkKey(key) {
             return false;
         return true;
     } catch(e) {
-        console.log(colors.error(`[CheckKey] Une erreur est survenue: ${e}`));
+        atmoDebug.logError(0, e);
         process.exit();
     }
 };
@@ -38,9 +43,57 @@ function stringToRegex(inputString) {
     return new RegExp(`^${inputString.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`);
 }
 
+function formatString(template, args) {
+    return template.replace(/{(\d+)}/g, function(match, number) {
+        return typeof args[number] !== 'undefined' ? args[number] : match;
+    });
+}
+
+function csvToJSON(csv){
+    csv = csv.replaceAll("\r", "");
+    var lines = csv.split("\n");
+  
+    var result = [];
+    var headers = lines[0].split(";");
+  
+    for(var i=1; i < lines.length; i++){
+        var obj = {};
+        lines[i] = lines[i].replaceAll("\\j", "\n");
+        var currentline = lines[i].split(";");
+  
+        for(var j=0; j < headers.length; j++){
+            obj[headers[j]] = currentline[j];
+        }
+  
+        result.push(obj);
+    }
+  
+    return result;
+}
+
+const atmoDebug = {
+    "log": (message, params = [], color = colors.default) => {
+        if(typeof message === "number") {
+            message = translation[message][config.language]
+        }
+    
+        if(params !== null && params.length !== 0) {
+            message = formatString(message, params)
+        }
+    
+        console.log(color(message))
+    },
+    "logError": (message, ...params)=> {atmoDebug.log(message, params, colors.error)},
+    "logSuccess": (message, ...params)=> {atmoDebug.log(message, params, colors.success)},
+    "logWarn": (message, ...params)=> {atmoDebug.log(message, params, colors.warning)}
+}
+
+const translationFile = fs.readFileSync("./translation.csv").toString()
+var translation = csvToJSON(translationFile);
+
 (async () => {
     console.clear();
-    console.log(colors.default(`
+    atmoDebug.log(`
   ___  _                             _          ✢         _   _             _ _ _      ______   _       _               ✢
  / _ \\| |             ✢             | |                  | | | |           (_) | |     |  ___| | |     | |              
 / /_\\ \\ |_ _ __ ___   ___  ___ _ __ | |__   ___ _ __ ___ | | | | __ _ _ __  _| | | __ _| |_ ___| |_ ___| |__   ___ _ __ 
@@ -49,53 +102,84 @@ function stringToRegex(inputString) {
 \\_| |_/\\__|_| |_| |_|\\___/|___/ .__/|_| |_|\\___|_|  \\___| \\___/ \\__,_|_| |_|_|_|_|\\__,_\\_| \\___|\\__\\___|_| |_|\\___|_|   
                               | |                                                                                       
                               |_|      ✢                     ✢                        v2.0.3 By Lunyx, Zoria & Murasaki.    ✢                                                               
-`));
+`);
 
-    let GITHUB_TOKEN = '';
+    let tmpTranslation = translationFile.replaceAll("\r", "")
+    let tmpLines = tmpTranslation.split("\n");
+
+    const disponibleLanguages = tmpLines[0].split(";")
+    if(!disponibleLanguages.includes(config.language)) {
+        let oldLang = config.language
+        config.language = defaultLanguage
+        atmoDebug.logWarn(1, oldLang, defaultLanguage)
+    }
+
+    var GITHUB_TOKEN = '';
+    var PACK_NAME = "Vanilla Pack"
+    var PACK_VERSION = "v1.0.0"
+
+    if (process.env.PACK_NAME)
+        PACK_NAME = process.env.PACK_NAME;
+
+    if (process.env.PACK_VERSION)
+        PACK_NAME = process.env.PACK_NAME;
     
     if (process.env.GITHUB_TOKEN)
         GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-    else if (fs.existsSync('./key.txt'))
-        GITHUB_TOKEN = await fs.readFile('./key.txt');
-    if (GITHUB_TOKEN == '') {
-        console.log(colors.warning('Aucune clé d\'accès à l\'API de GitHub n\'a été trouvée.'));    
-        do {
-            GITHUB_TOKEN = await qoa.input({ query: colors.warning('Veuillez indiquer votre clé d\'accès API GitHub:'), handle: 'key' }).then(a => { return a.key; });
-            if (GITHUB_TOKEN == '') {
-                console.log(colors.error('Vous n\'avez indiqué aucune clé.'));
-                continue;
-            };
-            console.log(colors.warning('Vérification de votre clé en cours...'));
-            if (await checkKey(GITHUB_TOKEN)) {
-                console.log(colors.success('La clé indiquée est valide, elle va être sauvegardée dans le fichier .env.'));
-                await fs.writeFile('./.env', `GITHUB_TOKEN=${GITHUB_TOKEN}`);
-                console.log(colors.success('La clé a bien été sauvegardée dans le fichier .env.'));
-            } else {
-                console.log(colors.error('La clé indiquée est invalide, veuillez en spécifier une de correcte.'));
-                GITHUB_TOKEN = '';
-            };
-        } while(GITHUB_TOKEN == '');
-    };
+    else {
+        atmoDebug.logError(2)
+        process.exit()
+    }
 
     const output_folder = './temp';
     const final_folder = './SD';
+    const python_folder = './python';
     let hekate_version = '';
 
     if(!fs.existsSync(output_folder)) {
         await fs.mkdir(output_folder);
-        console.log(colors.warning('Dossier temporaire (temp) créé.'));
+        atmoDebug.logWarn(3)
     };
     
     if(!fs.existsSync(final_folder)) {
         await fs.mkdir(final_folder);
-        console.log(colors.warning('Dossier contenant ce qui va être utilisé pour créer le pack (SD) créé.'));
+        atmoDebug.logWarn(4)
     };
 
-    if(config.startuplogoPath != null || "") {
+    if(!fs.existsSync(python_folder)) {
+        await fs.mkdir(python_folder);
+        atmoDebug.logWarn(5)
+    };
+
+    if(useStartuplogo) {
         exec("python -m pip install Pillow")
         exec("python -m pip install ips.py")
-    }else if(config.splashscreenPath != null || "") {
+
+        atmoDebug.logSuccess(6)
+    }else if(useSplashscreen) {
         exec("python -m pip install Pillow")
+
+        atmoDebug.logSuccess(6)
+    }
+
+    if(useStartuplogo) {
+        let dimensions = sizeOf(config.startuplogoPath)
+        
+        if(dimensions.width != 308 || dimensions.height != 350) {
+            atmoDebug.logError(7)
+            process.exit();
+        }
+    }
+    if(useSplashscreen) {
+        let dimensions = sizeOf(config.splashscreenPath)
+        
+        if(dimensions.width != 1280 || dimensions.height != 720) {
+            if (dimensions.width != 720 || dimensions.height != 1280) {
+                atmoDebug.logError(8)
+                process.exit(); 
+            }
+
+        }
     }
 
     async function getRelease(link, desiredFiles) {
@@ -103,17 +187,16 @@ function stringToRegex(inputString) {
             let release = await fetch(`https://api.github.com/repos/${link}/releases`, { headers: { Authorization: `token ${GITHUB_TOKEN}` } });
     
             if (release.status === 404) {
-                console.log(colors.error(`https://api.github.com/repos/${link}/releases retourne une erreur 404.`));
-                process.exit();
+                atmoDebug.logError(9, link);
             } else if (release.headers.get('x-ratelimit-limit') == 60) {
-                console.log(colors.error('La clé d\'accès à l\'API de GitHub est erronnée, vous allez devoir recommencer une configuration.'));
+                atmoDebug.logError(10);
                 if (fs.existsSync('./.env'))
                     await fs.unlink('./.env');
                 if (fs.existsSync('./key.txt'))
                     await fs.unlink('./key.txt');
                 process.exit();
             } else if (release.headers.get('x-ratelimit-remaining') == 0) {
-                console.log(colors.error(`Vous avez dépassé le nombre de requêtes maximum par heure, vous devez attendre ${colors.default(moment(Number(release.headers.get('x-ratelimit-reset')) * 1000).format('ddd LL, LTS'))} avant de pouvoir réutiliser le programme.`));
+                atmoDebug.logError(11);
                 process.exit();
             };
     
@@ -124,8 +207,7 @@ function stringToRegex(inputString) {
     
             const { assets } = release;
             if (assets.length === 0) {
-                console.log(colors.error(`Il n'y a pas de fichiers sur la dernière version de ${repoName}.`));
-                process.exit();
+                atmoDebug.logError(12, repoName)
             };
     
             const desiredFilesArray = [];
@@ -141,11 +223,11 @@ function stringToRegex(inputString) {
                 };
             };
 
-            console.log(colors.success(`${colors.default(`${repoName} (${release.tag_name})`)} récupéré.`));
+            atmoDebug.logSuccess(32, colors.default(`${repoName} (${release.tag_name})`));
     
             return desiredFilesArray;
         } catch (e) {
-            console.log(colors.error(`[GetRelease] Une erreur est survenue: ${e}`));
+            atmoDebug.logError(13, e);
             process.exit();
         };
     };
@@ -161,7 +243,7 @@ function stringToRegex(inputString) {
                 exp: /^atmosphere-(\d+(\.\d+))((\.\d+))-[a-zA-Z]+-[a-zA-Z0-9]+\+hbl-[0-9]*\.[0-9]+[0-9]*\.[0-9]+\+hbmenu-[0-9]*\.[0-9]+[0-9]*\.[0-9]+\.zip$/, filename: 'atmosphere.zip' 
             }, 
             { 
-                exp: /^fusee\.bin$/, filename: 'fusee.bin' 
+                exp: /^fusee\.bin$/, filename: 'fusee.bin' , directory: "bootloader/payloads"
             }] 
         }, 
         { 
@@ -169,6 +251,14 @@ function stringToRegex(inputString) {
                 exp: /^sys-patch\.zip$/, filename: 'sys-patch.zip' 
             }] 
         }];
+
+    if(config.includeUpdateKit) {
+        desiredReleases.push({
+            link: 'HamletDuFromage/aio-switch-updater', desiredFiles: [{ 
+                exp: /^aio-switch-updater\.zip$/, filename: 'aio-switch-updater.zip' 
+            }] 
+        })
+    }
 
     for(let repo of config.githubFiles) {
         const { link, desiredFiles } = repo;
@@ -178,7 +268,7 @@ function stringToRegex(inputString) {
 
     let files = [];
 
-    console.log(colors.warning('Récupération de la dernière version des dépôts GitHub en cours...\n'));
+    atmoDebug.logWarn(14);
 
     for (let desiredRelease of desiredReleases) {
         const { link, desiredFiles } = desiredRelease;
@@ -186,15 +276,27 @@ function stringToRegex(inputString) {
         files = files.concat(release);
     };
 
-    if(config.startuplogoPath != null || "") files.push({ name: "gen_patches.py", url: "https://raw.githubusercontent.com/friedkeenan/switch-logo-patcher/master/gen_patches.py", version: "latest", directory: "../python"});
-    if(config.splashscreenPath != null || "") files.push({ name: "insert_splash_screen.py", url: "https://github.com/Atmosphere-NX/Atmosphere/raw/master/utilities/insert_splash_screen.py", version: "latest", directory: "../python"});
-
-    if(config.onlineFiles.length > 0) files.push(        
-        config.onlineFiles.map(f => {
-            if(f.version == null) f.version = "latest"
-        })
+    files.push( 
+        { name: "exosphere.ini", url: "https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/exosphere.ini", version: "latest" }, 
+        { name: "repair.ini", url: "https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/repair.ini", version: "latest", directory: "bootloader/ini" }, 
+        { name: "sysmmc.txt", url: "https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/sysmmc.txt", version: "latest", directory: "atmosphere/hosts" }, 
+        { name: "emummc.txt", url: "https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/emummc.txt", version: "latest", directory: "atmosphere/hosts" },
+        { name: "boot.ini", url: "https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/boot.ini", version: "latest" }, 
+        { name: "boot.dat", url: "https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/boot.dat", version: "latest" }
     )
-    console.log(colors.warning('\nLes fichiers nécessaires à la création du pack sont en cours de téléchargement...'));
+
+    if(useStartuplogo) files.push({ name: "gen_patches.py", url: "https://raw.githubusercontent.com/friedkeenan/switch-logo-patcher/master/gen_patches.py", version: "latest", directory: "../python"});
+    if(useSplashscreen) files.push({ name: "insert_splash_screen.py", url: "https://github.com/Atmosphere-NX/Atmosphere/raw/master/utilities/insert_splash_screen.py", version: "latest", directory: "../python"});
+    
+    if(config.onlineFiles.length > 0) {    
+        config.onlineFiles.map(f => {
+            if(f.version == null) f.version = "latest";
+            files.push(f)
+            return f;
+        })
+    }
+
+    atmoDebug.logWarn(15);
 
     for (let file of files) {
         const { name, url, version } = file;
@@ -204,7 +306,7 @@ function stringToRegex(inputString) {
             hekate_version = version.replace('v', '');
         let downloader = new Downloader({ url: url, directory: output_folder, filename: name, cloneFiles: false, maxAttempts: 3,
             onBeforeSave: () => {
-                console.log(colors.warning(`\nLe fichier ${name} (${version}) est en cours de téléchargement...`));
+                atmoDebug.logWarn(33, name, version);
                 bar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
                 bar.start(100, 0);
             },   
@@ -216,106 +318,95 @@ function stringToRegex(inputString) {
         try {
             await downloader.download();
             bar.stop();
-            console.log(colors.success(`Le fichier ${colors.default(name)} a été téléchargé avec succès.`));
+            atmoDebug.logSuccess(16, colors.default(name))
         } catch (e) {
             if (bar)
                 bar.stop();
-            console.log(colors.error(`Le fichier ${colors.default(name)} n'a pas pu être téléchargé. ${e}`));
-            process.exit();
+            atmoDebug.logSuccess(17, colors.default(name), e)
         };
     };
 
-    console.log(colors.success('\nTous les fichiers nécessaires ont été téléchargés.'), colors.warning('\nPréparation du dossier SD...\n'));
+    atmoDebug.logSuccess(18);
+    atmoDebug.logWarn(19);
     let zip_temp_files = await fs.readdir(output_folder).then(files => { return files.filter(f => f.endsWith('.zip')) });
 
     for (let zip of zip_temp_files) {
-        if(!fs.existsSync(`./temp/${zip.replace('.zip', '')}`))
-            await fs.mkdir(`./temp/${zip.replace('.zip', '')}`);
+        let extractFolder = zip.replace('.zip', '')
+        if(!fs.existsSync(`./temp/${extractFolder}`))
+            await fs.mkdir(`./temp/${extractFolder}`);
         else {
-            await fs.rm(`./temp/${zip.replace('.zip', '')}`, { recursive: true });
-            await fs.mkdir(`./temp/${zip.replace('.zip', '')}`);
+            await fs.rm(`./temp/${extractFolder}`, { recursive: true });
+            await fs.mkdir(`./temp/${extractFolder}`);
         };
-        await ZIP.extract(`./temp/${zip}`, `./temp/${zip.replace('.zip', '')}`);
-        console.log(colors.success(`Le fichier ${colors.default(zip)} a été extrait avec succès.`));
+        await ZIP.extract(`./temp/${zip}`, `./temp/${extractFolder}`);
+        await fs.rm(`./temp/${zip}`)
+        atmoDebug.logSuccess(20, colors.default(zip));
+
+        let fileIndex = files.findIndex((f) => f.name == zip)
+        files[fileIndex].name = extractFolder
     };
 
     fs.rename(`./temp/hekate/hekate_ctcaer_${hekate_version}.bin`, './temp/hekate/hekate_ctcaer.bin', () => {
-        console.log(colors.warning(`Le fichier ${colors.default(`hekate_ctcaer_${hekate_version}.bin`)} a été renommé en ${colors.default('hekate_ctcaer.bin')}.`));
+        atmoDebug.logWarn(21, colors.default(`hekate_ctcaer_${hekate_version}.bin`), colors.default('hekate_ctcaer.bin'));
     });
 
     try {
-        await fs.copy('./temp/atmosphere/', './SD/');
-        console.log(colors.success(`\nLe contenu du dossier ${colors.default('temp/atmosphere')} a été copié vers le dossier ${colors.default('SD')}.`));
-        await fs.copy('./temp/hekate/bootloader/', './SD/bootloader/');
-        console.log(colors.success(`Le contenu du dossier ${colors.default('temp/hekate/bootloader')} a été copié vers le dossier ${colors.default('SD/bootloader')}.`));
-        await fs.copy('./temp/fusee.bin', './SD/bootloader/payloads/fusee.bin');
-        console.log(colors.success(`Le fichier ${colors.default('temp/fusee.bin')} a été copié vers le dossier ${colors.default('SD/bootloader/payloads')}`));
-        await fs.copy('./temp/hekate/hekate_ctcaer.bin', './SD/payload.bin');
-        console.log(colors.success(`Le fichier ${colors.default('temp/hekate/hekate_ctcaer.bin')} a été copié vers le dossier ${colors.default('SD (payload.bin)')}.`));
-        await fs.copy('./temp/hekate/hekate_ctcaer.bin', './SD/atmosphere/reboot_payload.bin');
-        console.log(colors.success(`Le fichier ${colors.default('temp/hekate/hekate_ctcaer.bin')} a été copié vers le dossier ${colors.default('SD/atmosphere (reboot_payload.bin)')}.`));
-        await fs.copy('./temp/sys-patch/atmosphere', './SD/atmosphere');
-        console.log(colors.success(`Le fichier ${colors.default('temp/sys-patch/atmosphere')} a été copié vers le dossier ${colors.default('SD/atmosphere')}.`));
-        //await fs.copy('./temp/sys-patch/bootloader', './SD/bootloader');
-        // console.log(colors.success(`Le fichier ${colors.default('temp/signature_gpd/bootloader')} a été copié vers le dossier ${colors.default('SD/bootloader')}.`));
-        // console.log(colors.success(`Nintendo à attaqué le repo github d'iTotalJustice, ce dernier à été" retiré du script pour le moment, nous nous excusons pour la gène occasioné.`));
-        await fs.copy('./temp/hekate_ipl.ini', './SD/bootloader/hekate_ipl.ini');
-        console.log(colors.success(`Le fichier ${colors.default('temp/hekate_ipl.ini')} a été copié vers le dossier ${colors.default('SD/bootloader')}.`));
-        await fs.copy('./temp/exosphere.ini', './SD/exosphere.ini');
-        console.log(colors.success(`Le fichier ${colors.default('temp/exosphere.ini')} a été copié vers le dossier ${colors.default('SD')}.`));
-        await fs.copy('./temp/version.txt', './SD/version.txt');
-        console.log(colors.success(`Le fichier ${colors.default('temp/version.txt')} a été copié vers le dossier ${colors.default('SD')}.`));
-        await fs.copy('./temp/boot.dat', './SD/boot.dat');
-        console.log(colors.success(`Le fichier ${colors.default('temp/boot.dat')} a été copié vers le dossier ${colors.default('SD')}.`));
-        await fs.copy('./temp/boot.ini', './SD/boot.ini');
-        console.log(colors.success(`Le fichier ${colors.default('temp/boot.ini')} a été copié vers le dossier ${colors.default('SD')}.`));
-        await fs.copy('./temp/repair.ini', './SD/bootloader/ini/repair.ini');
-        console.log(colors.success(`Le fichier ${colors.default('temp/repair.ini')} a été copié vers le dossier ${colors.default('/SD/bootloader/ini')}.`));
-
-        if (!fs.existsSync('./SD/atmosphere/hosts')) {
-            await fs.mkdir('./SD/atmosphere/hosts');
-            console.log(colors.success(`Le dossier ${colors.default('hosts')} a été créé dans ${colors.default('SD/atmosphere')}.`));
-        };
-
-        await fs.copy('./temp/sysmmc.txt', './SD/atmosphere/hosts/sysmmc.txt');
-        console.log(colors.success(`Le fichier ${colors.default('temp/sysmmc.txt')} a été copié vers le dossier ${colors.default('SD/atmosphere/hosts')}.`));
-        await fs.copy('./temp/emummc.txt', './SD/atmosphere/hosts/emummc.txt');
-        console.log(colors.success(`Le fichier ${colors.default('temp/emummc.txt')} a été copié vers le dossier ${colors.default('SD/atmosphere/hosts')}.`));
-        // await fs.copy('./temp/TinWoo-Installer/', './SD/');
-        // console.log(colors.success(`Le contenu du dossier ${colors.default('temp/TinWoo-Installer')} a été copié vers le dossier ${colors.default('SD')}.`));
-        console.log(colors.success(`Le développeur de TinWoo à retiré le repo github de TinWoo`));
-
-        // let homebrews = await fs.readdir(output_folder).then(files => { return files.filter(f => f.endsWith('nro')) });
-        
-        // for (let homebrew of homebrews) {
-        //     await fs.copy(`./temp/${homebrew}`, `./SD/switch/${homebrew}`);
-        //     console.log(colors.success(`Le contenu du dossier ${colors.default(`temp/${homebrew}`)} a été copié vers le dossier ${colors.default('SD/switch')}.`));
-        // };
-
         for (let file of files) {
-            if(file.directory != null || "") {
-                fs.copy(path.join("./temp", file.name), path.join("./SD", file.directory, file.name))
+            const destination = (typeof file.directory === "string") ? file.directory : "";
+
+            const stat = await fs.lstat(path.join("./temp", file.name));
+
+            if(stat.isFile()) {
+                await fs.copy(path.join("./temp", file.name), path.join("./SD", destination, file.name))
+            }else if(stat.isDirectory()) {
+                await fs.copy(path.join("./temp", file.name), path.join("./SD", destination))
             }
+
+            atmoDebug.logSuccess(22, colors.default(`temp/${file.name}`), colors.default(`SD/${destination}`));
         }
 
+        await fs.copy('./temp/hekate/hekate_ctcaer.bin', './SD/payload.bin');
+        atmoDebug.logSuccess(22, colors.default('temp/hekate/hekate_ctcaer.bin'), colors.default('SD (payload.bin)'));
+        await fs.copy('./temp/hekate/hekate_ctcaer.bin', './SD/atmosphere/reboot_payload.bin');
+        atmoDebug.logSuccess(22, colors.default('temp/hekate/hekate_ctcaer.bin'), colors.default('SD/atmosphere (reboot_payload.bin)'));
+
         await fs.copy("./localFiles", "./SD")
+        atmoDebug.logSuccess(23)
 
-        if(config.startuplogoPath != null || "") await PythonShell.run('./python/gen_patches.py', {args: ["./SD/atmosphere/exefs_patches/startup_logo", config.startuplogoPath]})
-        if(config.splashscreenPath != null || "") await PythonShell.run('./python/gen_patches.py', {args: [config.splashscreenPath, "./SD/atmosphere/package3"]})
+        if(config.includeUpdateKit) {
+            await fs.copy("./homebrewsConfig/aio-switch-updater", "./SD/config/aio-switch-updater")
+            const settings = `{"ams": {"${PACK_NAME}": "https://github.com/${config.repoLink}/releases/latest/download/${PACK_NAME}.zip"}}`
+            fs.writeFile("./SD/config/aio-switch-updater/custom_packs.json", settings)
 
-        console.log(colors.success('\nLe pack est en cours de création...\n'));
-        await ZIP.archiveFolder('./SD', `./${config.packName}.zip`);
+            atmoDebug.logSuccess(24)
+        }
 
-        console.log(colors.success('Voici le contenu du pack:'));
-        for (let file of files) {
-            const { name, version } = file;
-            console.log(colors.default(`${name} (${version})`));
-        };
+        fs.writeFileSync("./SD/version.txt", `- ${PACK_NAME} ${PACK_VERSION} -\n\n\n\nCreated With AtmoPackMaker : https://github.com/Kiriox94/AtmoPackMaker`)
 
-        await fs.emptyDir('./temp/', { recursive: true });
-        await fs.emptyDir('./SD/', { recursive: true });
-        console.log(colors.warning(`\nLe contenu des dossiers ${colors.default('temp')} et ${colors.default('SD')} ont étés supprimés.`), colors.success(`\nLe pack a été créé avec succès ${colors.default(`(${config.packName}.zip)`)}.`));
+        atmoDebug.logWarn(25);
+
+        let promises = []
+        if(useStartuplogo) promises.push(PythonShell.run('./python/gen_patches.py', {args: ["./SD/atmosphere/exefs_patches/startup_logo", config.startuplogoPath]}))
+        if(useSplashscreen) promises.push(PythonShell.run('./python/insert_splash_screen.py', {args: [config.splashscreenPath, "./SD/atmosphere/package3"]}))
+
+        Promise.all(promises).then(async () => {
+            atmoDebug.logSuccess(26, promises.length);
+
+            atmoDebug.logWarn(27)
+            await ZIP.archiveFolder('./SD', `./${PACK_NAME}.zip`);
+    
+            atmoDebug.logSuccess(28);
+            for (let file of files) {
+                const { name, version } = file;
+                console.log(colors.default(`${name} (${version})`));
+            };
+    
+            await fs.emptyDir('./temp/', { recursive: true });
+            await fs.emptyDir('./SD/', { recursive: true });
+            atmoDebug.logWarn(29, colors.default('temp'), colors.default('SD'))
+            atmoDebug.logSuccess(30, colors.default(`(${PACK_NAME}.zip)`))
+        })
     } catch (e) {
-        console.log(colors.error(`[Copie et création de ${config.packName}.zip] Une erreur est survenue: ${e}`));
+        atmoDebug.logError(31, PACK_NAME, e);
     };
 })();

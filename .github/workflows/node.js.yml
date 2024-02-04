@@ -1,5 +1,5 @@
 name: Node CI
-on: [push]
+on: [workflow_dispatch]
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -15,8 +15,8 @@ jobs:
         run: |
           npm ci
           node index
-      - name: AtmoPack-Vanilla
+      - name: AtmoPackMaker
         uses: actions/upload-artifact@v3
         with:
-          name: AtmoPack-Vanilla_Latest
-          path: AtmoPack-Vanilla_Latest.zip
+          name: ${{ vars.PACK_NAME }}
+          path: ${{ vars.PACK_NAME }}.zip
