@@ -6,7 +6,7 @@ on:
       version:
         description: 'The Pack Version'
         required: true
-        default: 'warning'
+        default: 'v1.0.0'
         type: string
 
 env:
@@ -28,7 +28,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
+          tag_name: ${{ inputs.version }}
           release_name: Release ${{ inputs.version }}
           draft: false
           prerelease: false
