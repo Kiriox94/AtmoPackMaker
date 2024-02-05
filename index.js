@@ -35,7 +35,7 @@ async function checkKey(key) {
         return true;
     } catch(e) {
         atmoDebug.logError(0, e);
-        process.exit();
+        process.exit(1);
     }
 };
 
@@ -128,7 +128,7 @@ var translation = csvToJSON(translationFile);
         GITHUB_TOKEN = process.env.GITHUB_TOKEN;
     else {
         atmoDebug.logError(2)
-        process.exit()
+        process.exit(1)
     }
 
     const output_folder = './temp';
@@ -167,7 +167,7 @@ var translation = csvToJSON(translationFile);
         
         if(dimensions.width != 308 || dimensions.height != 350) {
             atmoDebug.logError(7)
-            process.exit();
+            useStartuplogo = false;
         }
     }
     if(useSplashscreen) {
@@ -175,8 +175,8 @@ var translation = csvToJSON(translationFile);
         
         if(dimensions.width != 1280 || dimensions.height != 720) {
             if (dimensions.width != 720 || dimensions.height != 1280) {
-                atmoDebug.logError(8)
-                process.exit(); 
+                atmoDebug.logError(8);
+                useSplashscreen = false;
             }
 
         }
@@ -194,10 +194,10 @@ var translation = csvToJSON(translationFile);
                     await fs.unlink('./.env');
                 if (fs.existsSync('./key.txt'))
                     await fs.unlink('./key.txt');
-                process.exit();
+                process.exit(1);
             } else if (release.headers.get('x-ratelimit-remaining') == 0) {
                 atmoDebug.logError(11);
-                process.exit();
+                process.exit(1);
             };
     
             release = await release.json();
@@ -228,7 +228,6 @@ var translation = csvToJSON(translationFile);
             return desiredFilesArray;
         } catch (e) {
             atmoDebug.logError(13, e);
-            process.exit();
         };
     };
     process.setMaxListeners(0);
@@ -408,6 +407,6 @@ var translation = csvToJSON(translationFile);
         })
     } catch (e) {
         atmoDebug.logError(31, PACK_NAME, e);
-        process.exit();
+        process.exit(1);
     };
 })();
