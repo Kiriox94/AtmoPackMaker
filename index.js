@@ -408,5 +408,6 @@ var translation = csvToJSON(translationFile);
         })
     } catch (e) {
         atmoDebug.logError(31, PACK_NAME, e);
+        process.exit();
     };
 })();
