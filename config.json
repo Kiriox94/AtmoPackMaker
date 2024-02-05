@@ -5,27 +5,27 @@
     "githubFiles": [
         { 
             "link": "WerWolv/EdiZon", "desiredFiles": [{ 
-                "filename": "EdiZon.nro" 
+                "filename": "EdiZon.nro", "directory": "switch"
             }] 
         }, 
         { 
             "link": "XorTroll/Goldleaf", "desiredFiles": [{ 
-                "filename": "Goldleaf.nro" 
+                "filename": "Goldleaf.nro", "directory": "switch"
             }] 
         }, 
         { 
             "link": "J-D-K/JKSV", "desiredFiles": [{ 
-                "filename": "JKSV.nro" 
+                "filename": "JKSV.nro", "directory": "switch"
             }] 
         },
         { 
             "link": "rashevskyv/dbi", "desiredFiles": [{ 
-                "filename": "DBI.nro" 
+                "filename": "DBI.nro", "directory": "switch/dbi"
             }] 
         },
         { 
             "link": "meganukebmp/Switch_90DNS_tester", "desiredFiles": [{ 
-                "filename": "Switch_90DNS_tester.nro" 
+                "filename": "Switch_90DNS_tester.nro", "directory": "switch"
             }] 
         }
     ],
