@@ -1,5 +1,12 @@
-name: Node CI
-on: [workflow_dispatch]
+name: Just Compile
+on: 
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'The Pack Version'
+        required: true
+        default: '1.0.0'
+        type: string
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
