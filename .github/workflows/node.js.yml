@@ -10,7 +10,8 @@ on:
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+  PACK_VERSION: ${{ inputs.version }}
+  PACK_NAME: ${{ vars.PACK_NAME }}
 
 jobs:
   AtmoPack-Vanilla_Release:
@@ -19,9 +20,6 @@ jobs:
       - name: Create Pack
         uses: actions/checkout@v3
       - name: node index
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PACK_VERSION: ${{ inputs.version }}
         run: |
           npm ci
           node index
