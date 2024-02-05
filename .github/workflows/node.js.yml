@@ -12,6 +12,9 @@ jobs:
       - name: Create Pack
         uses: actions/checkout@v3
       - name: node index
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PACK_VERSION: ${{ inputs.version }}
         run: |
           npm ci
           node index

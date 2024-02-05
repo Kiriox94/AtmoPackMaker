@@ -6,19 +6,22 @@ on:
       version:
         description: 'The Pack Version'
         required: true
-        default: 'v1.0.0'
+        default: '1.0.0'
         type: string
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
-  AtmoPack-Vanilla_Release:
+  Pack-Release:
     runs-on: ubuntu-latest
     steps:
       - name: Create Pack
         uses: actions/checkout@v3
       - name: node index
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PACK_VERSION: ${{ inputs.version }}
         run: |
           npm i
           node index
