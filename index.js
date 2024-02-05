@@ -94,7 +94,6 @@ var translation = csvToJSON(translationFile);
 (async () => {
     console.clear();
     atmoDebug.log(`
-
     _____   __                __________                __      _____          __                 
     /  _  \_/  |_  _____   ____\______   \_____    ____ |  | __ /     \ _____  |  | __ ___________ 
    /  /_\  \   __\/     \ /  _ \|     ___/\__  \ _/ ___\|  |/ //  \ /  \\__  \ |  |/ // __ \_  __ \
@@ -376,7 +375,7 @@ var translation = csvToJSON(translationFile);
 
         if(config.includeUpdateKit) {
             if(fs.existsSync("./homebrewsConfig/aio-switch-updater")) await fs.copy("./homebrewsConfig/aio-switch-updater", "./SD/config/aio-switch-updater")
-            const settings = `{"ams": {"${PACK_NAME}": "https://github.com/${config.repoLink}/releases/latest/download/${PACK_NAME}.zip"}}`
+            const settings = `{"ams": {"${PACK_NAME}": "https://github.com/${config.repoLink}/releases/latest/download/${PACK_NAME.replaceAll(" ", ".")}.zip"}}`
             fs.writeFile("./SD/config/aio-switch-updater/custom_packs.json", settings)
 
             atmoDebug.logSuccess(24)
