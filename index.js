@@ -369,11 +369,13 @@ var translation = csvToJSON(translationFile);
         await fs.copy('./temp/hekate/hekate_ctcaer.bin', './SD/atmosphere/reboot_payload.bin');
         atmoDebug.logSuccess(22, colors.default('temp/hekate/hekate_ctcaer.bin'), colors.default('SD/atmosphere (reboot_payload.bin)'));
 
-        await fs.copy("./localFiles", "./SD")
-        atmoDebug.logSuccess(23)
+        if(fs.existsSync("./localFiles")) {
+            await fs.copy("./localFiles", "./SD")
+            atmoDebug.logSuccess(23)
+        }
 
         if(config.includeUpdateKit) {
-            await fs.copy("./homebrewsConfig/aio-switch-updater", "./SD/config/aio-switch-updater")
+            if(fs.existsSync("./homebrewsConfig/aio-switch-updater")) await fs.copy("./homebrewsConfig/aio-switch-updater", "./SD/config/aio-switch-updater")
             const settings = `{"ams": {"${PACK_NAME}": "https://github.com/${config.repoLink}/releases/latest/download/${PACK_NAME}.zip"}}`
             fs.writeFile("./SD/config/aio-switch-updater/custom_packs.json", settings)
 
