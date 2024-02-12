@@ -14,7 +14,7 @@ To always have the latest version of the project, remember to click on the "Sync
 ## Configuration
 
 ### PACK_NAME
-To select the name of your pack, you need to use [GitHub's variable system](https://docs.github.com/en/actions/learn-github-actions/variables). To do this, [go here](/settings/variables/actions/new), and in the `name` field, put `PACK_NAME`, then put the name you want to give to your pack in the `value` field.
+To select the name of your pack, you need to use [GitHub's variable system](https://docs.github.com/en/actions/learn-github-actions/variables). To do this, [go here](../../settings/variables/actions/new), and in the `name` field, put `PACK_NAME`, then put the name you want to give to your pack in the `value` field.
 
 ### localFiles
 If you want to include files in your pack that don't need to be downloaded, you can simply place them in the [`localFiles`](/localFiles) folder, the contents of which will be copied to the root of the SD card.
