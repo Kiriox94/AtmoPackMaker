@@ -1,7 +1,8 @@
 {
     "language": "en",
-    "repoLink": "Kiriox94/AtmoPackMaker",
-    "includeUpdateKit": true,
+    "useAIO": true,
+    "startuplogoPath": "",
+    "splashscreenPath": "",
     "githubFiles": [
         { 
             "link": "WerWolv/EdiZon", "desiredFiles": [{ 
@@ -33,10 +34,7 @@
         {
             "name": "hekate_ipl.ini",
             "url": "https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/hekate_ipl.ini",
-            "version": "latest",
             "directory": "bootloader"
         }
-    ],
-    "startuplogoPath": "",
-    "splashscreenPath": ""
+    ]
 }

@@ -1,17 +1,10 @@
 name: Just Compile
-on: 
-  workflow_dispatch:
-    inputs:
-      version:
-        description: 'The Pack Version'
-        required: false
-        default: '1.0.0'
-        type: string
+on: [workflow_dispatch]
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  PACK_VERSION: ${{ inputs.version }}
   PACK_NAME: ${{ vars.PACK_NAME }}
+  REPO_LINK: ${{github.repository}}
 
 jobs:
   AtmoPack-Vanilla_Release:

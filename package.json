@@ -15,6 +15,7 @@
   "homepage": "https://github.com/Lunyyx/AtmosphereVanillaFetcher#readme",
   "dependencies": {
     "ajax-client": "^1.5.6",
+    "ascii-art": "^2.8.5",
     "chalk": "^4.1.1",
     "cli-progress": "^3.9.0",
     "cryptocipher": "^3.0.6",

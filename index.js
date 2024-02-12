@@ -10,6 +10,7 @@ const ZIP = require('zip-lib');
 const path = require("path")
 const { exec } = require('child_process');
 const sizeOf = require('image-size');
+const art = require("ascii-art")
 require('dotenv').config();
 moment.locale('fr');
 
@@ -93,15 +94,12 @@ var translation = csvToJSON(translationFile);
 
 (async () => {
     console.clear();
-    atmoDebug.log(`
-    _____   __                __________                __      _____          __                 
-    /  _  \_/  |_  _____   ____\______   \_____    ____ |  | __ /     \ _____  |  | __ ___________ 
-   /  /_\  \   __\/     \ /  _ \|     ___/\__  \ _/ ___\|  |/ //  \ /  \\__  \ |  |/ // __ \_  __ \
-  /    |    \  | |  Y Y  (  <_> )    |     / __ \\  \___|    </    Y    \/ __ \|    <\  ___/|  | \/
-  \____|__  /__| |__|_|  /\____/|____|    (____  /\___  >__|_ \____|__  (____  /__|_ \\___  >__|   
-          \/           \/                      \/     \/     \/       \/     \/     \/    \/       
-                                                            v1.0.0 By Kiriox.                                                            
-`);
+    try{
+        let rendered = await art.font("AtmoPackMaker", "doom").completed()
+        atmoDebug.log(rendered)
+        atmoDebug.log("v1.0.0 By Kiriox.\n")
+    }catch(err){
+    }
 
     let tmpTranslation = translationFile.replaceAll("\r", "")
     let tmpLines = tmpTranslation.split("\n");
@@ -115,13 +113,16 @@ var translation = csvToJSON(translationFile);
 
     var GITHUB_TOKEN = '';
     var PACK_NAME = "Vanilla Pack"
-    var PACK_VERSION = "v1.0.0"
+    var PACK_VERSION = "Test Version"
 
     if (process.env.PACK_NAME)
         PACK_NAME = process.env.PACK_NAME;
 
     if (process.env.PACK_VERSION)
         PACK_NAME = process.env.PACK_NAME;
+
+    if (process.env.REPO_LINK)
+        config.repoLink = process.env.REPO_LINK;
     
     if (process.env.GITHUB_TOKEN)
         GITHUB_TOKEN = process.env.GITHUB_TOKEN;
@@ -250,7 +251,7 @@ var translation = csvToJSON(translationFile);
             }] 
         }];
 
-    if(config.includeUpdateKit) {
+    if(config.useAIO) {
         desiredReleases.push({
             link: 'HamletDuFromage/aio-switch-updater', desiredFiles: [{ 
                 exp: /^aio-switch-updater\.zip$/, filename: 'aio-switch-updater.zip' 
@@ -275,12 +276,12 @@ var translation = csvToJSON(translationFile);
     };
 
     files.push( 
-        { name: "exosphere.ini", url: "https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/exosphere.ini", version: "latest" }, 
-        { name: "repair.ini", url: "https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/repair.ini", version: "latest", directory: "bootloader/ini" }, 
-        { name: "sysmmc.txt", url: "https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/sysmmc.txt", version: "latest", directory: "atmosphere/hosts" }, 
-        { name: "emummc.txt", url: "https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/emummc.txt", version: "latest", directory: "atmosphere/hosts" },
-        { name: "boot.ini", url: "https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/boot.ini", version: "latest" }, 
-        { name: "boot.dat", url: "https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/boot.dat", version: "latest" }
+        { name: "exosphere.ini", url: "https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/exosphere.ini" }, 
+        { name: "repair.ini", url: "https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/repair.ini", directory: "bootloader/ini" }, 
+        { name: "sysmmc.txt", url: "https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/sysmmc.txt", directory: "atmosphere/hosts" }, 
+        { name: "emummc.txt", url: "https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/emummc.txt", directory: "atmosphere/hosts" },
+        { name: "boot.ini", url: "https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/boot.ini" }, 
+        { name: "boot.dat", url: "https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/boot.dat" }
     )
 
     if(useStartuplogo) files.push({ name: "gen_patches.py", url: "https://raw.githubusercontent.com/friedkeenan/switch-logo-patcher/master/gen_patches.py", version: "latest", directory: "../python"});
@@ -290,7 +291,6 @@ var translation = csvToJSON(translationFile);
         config.onlineFiles.map(f => {
             if(f.version == null) f.version = "latest";
             files.push(f)
-            return f;
         })
     }
 
@@ -320,7 +320,7 @@ var translation = csvToJSON(translationFile);
         } catch (e) {
             if (bar)
                 bar.stop();
-            atmoDebug.logSuccess(17, colors.default(name), e)
+            atmoDebug.logError(17, colors.default(name), e)
         };
     };
 
@@ -373,7 +373,7 @@ var translation = csvToJSON(translationFile);
             atmoDebug.logSuccess(23)
         }
 
-        if(config.includeUpdateKit) {
+        if(config.useAIO) {
             if(fs.existsSync("./homebrewsConfig/aio-switch-updater")) await fs.copy("./homebrewsConfig/aio-switch-updater", "./SD/config/aio-switch-updater")
             const settings = `{"ams": {"${PACK_NAME}": "https://github.com/${config.repoLink}/releases/latest/download/${PACK_NAME.replaceAll(" ", ".")}.zip"}}`
             fs.writeFile("./SD/config/aio-switch-updater/custom_packs.json", settings)

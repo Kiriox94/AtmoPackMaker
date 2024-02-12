@@ -23,6 +23,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PACK_VERSION: ${{ inputs.version }}
           PACK_NAME: ${{ vars.PACK_NAME }}
+          REPO_LINK: ${{github.repository}}
         run: |
           npm i
           node index

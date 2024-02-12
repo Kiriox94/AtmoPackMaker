@@ -5,3 +5,4 @@ temp/
 package-lock.json
 pack.zip
 yarn.lock
+.vscode
