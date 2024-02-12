@@ -45,8 +45,8 @@ The main configuration is done with the [`config.json`](/config.json) file, whic
     - `directory` represents the path on the SD card where you want your file to be placed. For example, for a homebrew, just put `switch` to place it in the right folder (leave blank if you want it placed at the root).
          
 # Compilation
-To easily compile the pack, I use [GitHub's workflow system](https://docs.github.com/en/actions/using-workflows/about-workflows). To enable it, go to [the `actions` section](/actions) of your repository, and click on the blue button.\
-![actions](../../.github/actions.png)
+To easily compile the pack, I use [GitHub's workflow system](https://docs.github.com/en/actions/using-workflows/about-workflows). To enable it, go to [the actions section](../../actions) of your repository, and click on the blue button.\
+![actions](/.github/actions.png)
 
 ## Automatic
 Allows triggering the compilation of the pack directly from your switch. This option is still in development, please refer to the manual system in the meantime.
