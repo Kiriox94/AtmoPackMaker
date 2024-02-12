@@ -14,7 +14,7 @@ Pour toujours avoir la dernière version du projet, pensez à cliquer de temps e
 ## Configuration
 
 ### PACK_NAME
-Pour sélectionner le nom de votre pack, il faut passer par [le système de variable de GitHub](https://docs.github.com/fr/actions/learn-github-actions/variables). Pour cela, [allez ici](/settings/variables/actions/new), et dans le champ `name`, mettez `PACK_NAME`, puis mettez le nom que vous voulez donner à votre pack dans le champ `value`.
+Pour sélectionner le nom de votre pack, il faut passer par [le système de variable de GitHub](https://docs.github.com/fr/actions/learn-github-actions/variables). Pour cela, [allez ici](../../settings/variables/actions/new), et dans le champ `name`, mettez `PACK_NAME`, puis mettez le nom que vous voulez donner à votre pack dans le champ `value`.
 
 ### localFiles
 Si vous voulez inclure dans votre pack des fichiers qui n'ont pas besoin d'être téléchargés, vous pouvez simplement les placer dans le dossier [`localFiles`](/localFiles), dont le contenu sera copié à la racine de la carte SD.
@@ -45,7 +45,7 @@ La configuration principale se fait avec le fichier [`config.json`](/config.json
     - `directory` représente le chemin sur la carte SD où vous voulez que votre fichier soit placé. Par exemple, pour un homebrew, il suffit de mettre `switch` pour que ce soit placé dans le bon dossier (laissez vide si vous voulez que ce soit placé à la racine).
          
 # Compilation
-Pour pouvoir facilement compiler le pack, j'utilise [le système de workflow de GitHub](https://docs.github.com/fr/actions/using-workflows/about-workflows). Pour l'activer, rendez-vous dans [la section `actions`](/actions) de votre repository, et cliquez sur le bouton bleu.\
+Pour pouvoir facilement compiler le pack, j'utilise [le système de workflow de GitHub](https://docs.github.com/fr/actions/using-workflows/about-workflows). Pour l'activer, rendez-vous dans [la section `actions`](../../actions) de votre repository, et cliquez sur le bouton bleu.\
 ![actions](/.github/actions.png)
 
 ## Automatique
@@ -53,9 +53,9 @@ Permet de déclencher la compilation du pack directement depuis votre switch. Ce
 
 ## Manuel
 ### Compile And Release
-`Compile And Release` permet de compiler le pack puis de le publier dans une release. Pour cela, rendez-vous [ici](/actions/workflows/releaseOnTag.yml) et cliquez sur `Run workflow`. Ensuite, précisez le numéro de version que vous voulez pour votre release (attention, deux releases ne peuvent pas avoir le même numéro de version, cela créerait une erreur). Enfin, cliquez sur le bouton bleu `Run workflow`. Il ne vous reste plus qu'à attendre la fin du processus.
+`Compile And Release` permet de compiler le pack puis de le publier dans une release. Pour cela, rendez-vous [ici](../../actions/workflows/releaseOnTag.yml) et cliquez sur `Run workflow`. Ensuite, précisez le numéro de version que vous voulez pour votre release (attention, deux releases ne peuvent pas avoir le même numéro de version, cela créerait une erreur). Enfin, cliquez sur le bouton bleu `Run workflow`. Il ne vous reste plus qu'à attendre la fin du processus.
 ### Just Compile
-`Just Compile` permet de compiler le pack sans publier de release après. Il peut être pratique si vous voulez voir si votre configuration fonctionne bien sans pour autant en faire une version. Pour cela, rendez-vous [ici](/actions/workflows/node.js.yml) et cliquez sur `Run workflow`, puis encore une fois sur `Run workflow`. Il ne vous reste plus qu'à attendre la fin du processus. 
+`Just Compile` permet de compiler le pack sans publier de release après. Il peut être pratique si vous voulez voir si votre configuration fonctionne bien sans pour autant en faire une version. Pour cela, rendez-vous [ici](../../actions/workflows/node.js.yml) et cliquez sur `Run workflow`, puis encore une fois sur `Run workflow`. Il ne vous reste plus qu'à attendre la fin du processus. 
 
 # Remerciements
 - Lunyx, Zoria et Murasaki pour [AtmosphereVanillaFetcher](https://github.com/Lunyyx/AtmosphereVanillaFetcher-cli)

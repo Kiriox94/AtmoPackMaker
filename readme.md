@@ -37,7 +37,7 @@ The main configuration is done with the [`config.json`](/config.json) file, whic
     - `desiredFiles` is also an array representing all the files you want to be downloaded from the latest release of the repo. Here are the available properties:
         - `filename` represents the name the file will have once downloaded.
         - `directory` represents the path on the SD card where you want your file to be placed. For example, for a homebrew, just put `switch` to place it in the right folder (leave blank if you want it placed at the root).
-        - `exp` represents the name of the file you want to retrieve from the release in the form of a [regular expression](https://www.empirik.fr/nos-ressources/article/expressions-regulieres-ou-regex-definition-cas-dusages-et-exemples/), handy if the filename changes with versions. For example, to download the correct file on the Atmosphere release: `/^atmosphere-(\d+(\.\d+))((\.\d+))-[a-zA-Z]+-[a-zA-Z0-9]+\+hbl-[0-9]*\.[0-9]+[0-9]*\.[0-9]+\+hbmenu-[0-9]*\.[0-9]+[0-9]*\.[0-9]+\.zip$/` (if nothing is specified, it will be generated automatically from the `filename` property).
+        - `exp` represents the name of the file you want to retrieve from the release in the form of a [regular expression](https://www.regular-expressions.info/), handy if the filename changes with versions. For example, to download the correct file on the Atmosphere release: `/^atmosphere-(\d+(\.\d+))((\.\d+))-[a-zA-Z]+-[a-zA-Z0-9]+\+hbl-[0-9]*\.[0-9]+[0-9]*\.[0-9]+\+hbmenu-[0-9]*\.[0-9]+[0-9]*\.[0-9]+\.zip$/` (if nothing is specified, it will be generated automatically from the `filename` property).
 
 - `onlineFiles` represents the files you want to download via a link. Each element of the array represents a different file, and each must have these properties:
     - `name` represents the name the file will have once downloaded.
@@ -46,16 +46,16 @@ The main configuration is done with the [`config.json`](/config.json) file, whic
          
 # Compilation
 To easily compile the pack, I use [GitHub's workflow system](https://docs.github.com/en/actions/using-workflows/about-workflows). To enable it, go to [the `actions` section](/actions) of your repository, and click on the blue button.\
-![actions](/.github/actions.png)
+![actions](../../.github/actions.png)
 
 ## Automatic
 Allows triggering the compilation of the pack directly from your switch. This option is still in development, please refer to the manual system in the meantime.
 
 ## Manual
 ### Compile And Release
-`Compile And Release` allows you to compile the pack and then publish it in a release. To do this, go [here](/actions/workflows/releaseOnTag.yml) and click on `Run workflow`. Then specify the version number you want for your release (be careful, two releases cannot have the same version number, as it would create an error). Finally, click on the blue `Run workflow` button. All that's left is to wait for the process to finish.
+`Compile And Release` allows you to compile the pack and then publish it in a release. To do this, go [here](../../actions/workflows/releaseOnTag.yml) and click on `Run workflow`. Then specify the version number you want for your release (be careful, two releases cannot have the same version number, as it would create an error). Finally, click on the blue `Run workflow` button. All that's left is to wait for the process to finish.
 ### Just Compile
-`Just Compile` allows you to compile the pack without publishing a release afterward. It can be useful if you want to see if your configuration works well without making a version. To do this, go [here](/actions/workflows/node.js.yml) and click on `Run workflow`, then once again on `Run workflow`. All that's left is to wait for the process to finish.
+`Just Compile` allows you to compile the pack without publishing a release afterward. It can be useful if you want to see if your configuration works well without making a version. To do this, go [here](../../actions/workflows/node.js.yml) and click on `Run workflow`, then once again on `Run workflow`. All that's left is to wait for the process to finish.
 
 # Acknowledgments
 - Lunyx, Zoria, and Murasaki for [AtmosphereVanillaFetcher](https://github.com/Lunyyx/AtmosphereVanillaFetcher-cli)
