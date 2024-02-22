@@ -24,7 +24,9 @@ La configuration principale se fait avec le fichier [`config.json`](/config.json
 
 - `language` représente la langue que vous voulez utiliser pour afficher les logs de la console (liste de toutes les langues disponibles accessible [ici](/translation.csv)).
 
-- `repoLink` représente le chemin d'accès à votre repository sur lequel est le projet, par exemple `Kiriox94/AtmoPackMaker` (si votre pack est sur une autre branche que la principale, précisez-le ainsi : `Kiriox94/AtmoPackMaker/tree/Eevee-Pack`). Par défaut, cette valeur est récupérée automatiquement, il ne sert donc à rien de la spécifier sauf cas particulier (si votre pack est sur une autre branche que la principale, par exemple).
+- `repoLink` représente le chemin d'accès à votre repository sur lequel est le projet, par exemple `Kiriox94/AtmoPackMaker`. Par défaut, cette valeur est récupérée automatiquement, il ne sert donc à rien de la spécifier sauf cas particulier.
+
+- `branch` représente la branche de votre repository sur la quel ce trouve le pack (à indiqué uniquement si c'est sur une autre que la main).
 
 - `useAIO` représente si vous voulez inclure [aio-switch-updater](https://github.com/HamletDuFromage/aio-switch-updater) dans le pack, vous permettant ainsi de mettre à jour le pack directement depuis votre switch.
 

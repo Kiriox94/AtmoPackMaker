@@ -1,8 +1,9 @@
 node_modules/
 SD/
 temp/
+.vscode/
+python/
 .env
 package-lock.json
 pack.zip
 yarn.lock
-.vscode
