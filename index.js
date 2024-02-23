@@ -10,9 +10,8 @@ const ZIP = require('zip-lib');
 const path = require("path")
 const { exec } = require('child_process');
 const sizeOf = require('image-size');
-const art = require("ascii-art")
 require('dotenv').config();
-moment.locale('fr');
+moment.locale('en');
 
 const config  = require("./config.json")
 const defaultLanguage = "en";
@@ -94,12 +93,7 @@ var translation = csvToJSON(translationFile);
 
 (async () => {
     console.clear();
-    try{
-        let rendered = await art.font("AtmoPackMaker", "doom").completed()
-        atmoDebug.log(rendered)
-        atmoDebug.log("v1.0.0 By Kiriox.\n")
-    }catch(err){
-    }
+    atmoDebug.log(fs.readFileSync("./logo.txt").toString())
 
     let tmpTranslation = translationFile.replaceAll("\r", "")
     let tmpLines = tmpTranslation.split("\n");
