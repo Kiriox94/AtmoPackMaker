@@ -1,22 +1,22 @@
 {
-  "name": "atmospherevanillafetcher",
-  "version": "0.0.1",
-  "description": "AtmosphereVanillaFetcher",
+  "name": "atmopackmaker",
+  "version": "1.0.0",
+  "description": "AtmoPackMaker",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": "git+https://github.com/Lunyyx/AtmosphereVanillaFetcher.git",
-  "author": "Lunyx, Murasaki",
+  "repository": "git+https://github.com/Kiriox94/AtmoPackMaker.git",
+  "author": "Kiriox",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Lunyyx/AtmosphereVanillaFetcher/issues"
+    "url": "https://github.com/Kiriox94/AtmoPackMaker/issues"
   },
-  "homepage": "https://github.com/Lunyyx/AtmosphereVanillaFetcher#readme",
+  "homepage": "https://github.com/Kiriox94/AtmoPackMaker#readme",
   "dependencies": {
     "ajax-client": "^1.5.6",
     "ascii-art": "^2.8.5",
-    "chalk": "^5.3.0",
+    "chalk": "^4.1.1",
     "cli-progress": "^3.9.0",
     "cryptocipher": "^3.0.6",
     "dotenv": "^9.0.2",

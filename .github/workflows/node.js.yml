@@ -5,6 +5,7 @@ env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   PACK_NAME: ${{ vars.PACK_NAME }}
   REPO_LINK: ${{github.repository}}
+  FORCE_COLOR: 3
 
 jobs:
   AtmoPack-Vanilla_Release:

@@ -3,7 +3,7 @@ SD/
 temp/
 .vscode/
 python/
+*.zip
 .env
 package-lock.json
-pack.zip
 yarn.lock
