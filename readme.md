@@ -54,10 +54,10 @@ To easily compile the pack, I use [GitHub's workflow system](https://docs.github
 Allows triggering the compilation of the pack directly from your switch. This option is still in development, please refer to the manual system in the meantime.
 
 ## Manual
-### Compile And Release
-`Compile And Release` allows you to compile the pack and then publish it in a release. To do this, go [here](../../actions/workflows/releaseOnTag.yml) and click on `Run workflow`. Then specify the version number you want for your release (be careful, two releases cannot have the same version number, as it would create an error). Finally, click on the blue `Run workflow` button. All that's left is to wait for the process to finish.
-### Just Compile
-`Just Compile` allows you to compile the pack without publishing a release afterward. It can be useful if you want to see if your configuration works well without making a version. To do this, go [here](../../actions/workflows/node.js.yml) and click on `Run workflow`, then once again on `Run workflow`. All that's left is to wait for the process to finish.
+### Build And Release
+Build And Release allows you to compile the package and then publish it in a release. To do this, go to [here](../../actions/workflows/release.yml) and click on `Run workflow`. Next, specify the version number you want for your release (note that two releases cannot have the same version number, as this would create an error). Finally, click on the blue `Run workflow` button. Now all you have to do is wait for the process to finish.
+### Just Build
+Just Build allows you to compile the package without publishing a release afterwards. This can be useful if you want to see how well your configuration works without actually making a release. To do this, go to [here](../../actions/workflows/build.yml) and click on `Run workflow`, then again on `Run workflow`. Now all you have to do is wait for the process to finish.
 
 # Acknowledgments
 - Lunyx, Zoria, and Murasaki for [AtmosphereVanillaFetcher](https://github.com/Lunyyx/AtmosphereVanillaFetcher-cli)

@@ -54,10 +54,10 @@ Pour pouvoir facilement compiler le pack, j'utilise [le système de workflow de 
 Permet de déclencher la compilation du pack directement depuis votre switch. Cette option est encore en développement, veuillez vous référer au système manuel en attendant.
 
 ## Manuel
-### Compile And Release
-`Compile And Release` permet de compiler le pack puis de le publier dans une release. Pour cela, rendez-vous [ici](../../actions/workflows/releaseOnTag.yml) et cliquez sur `Run workflow`. Ensuite, précisez le numéro de version que vous voulez pour votre release (attention, deux releases ne peuvent pas avoir le même numéro de version, cela créerait une erreur). Enfin, cliquez sur le bouton bleu `Run workflow`. Il ne vous reste plus qu'à attendre la fin du processus.
-### Just Compile
-`Just Compile` permet de compiler le pack sans publier de release après. Il peut être pratique si vous voulez voir si votre configuration fonctionne bien sans pour autant en faire une version. Pour cela, rendez-vous [ici](../../actions/workflows/node.js.yml) et cliquez sur `Run workflow`, puis encore une fois sur `Run workflow`. Il ne vous reste plus qu'à attendre la fin du processus. 
+### Build And Release
+`Build And Release` permet de compiler le pack puis de le publier dans une release. Pour cela, rendez-vous [ici](../../actions/workflows/release.yml) et cliquez sur `Run workflow`. Ensuite, précisez le numéro de version que vous voulez pour votre release (attention, deux releases ne peuvent pas avoir le même numéro de version, cela créerait une erreur). Enfin, cliquez sur le bouton bleu `Run workflow`. Il ne vous reste plus qu'à attendre la fin du processus.
+### Just Build
+`Just Build` permet de compiler le pack sans publier de release après. Il peut être pratique si vous voulez voir si votre configuration fonctionne bien sans pour autant en faire une version. Pour cela, rendez-vous [ici](../../actions/workflows/build.yml) et cliquez sur `Run workflow`, puis encore une fois sur `Run workflow`. Il ne vous reste plus qu'à attendre la fin du processus. 
 
 # Remerciements
 - Lunyx, Zoria et Murasaki pour [AtmosphereVanillaFetcher](https://github.com/Lunyyx/AtmosphereVanillaFetcher-cli)
