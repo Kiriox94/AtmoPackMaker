@@ -40,7 +40,7 @@ async function checkKey(key) {
 };
 
 function stringToRegex(inputString) {
-    return new RegExp(`^${inputString.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`);
+    return `^${inputString.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`;
 }
 
 function formatString(template, args) {
@@ -210,7 +210,8 @@ var translation = csvToJSON(translationFile);
                 const { name, browser_download_url } = asset;
                 for (let file of desiredFiles) {
                     const { exp, filename, directory } = file;
-                    if (exp.test(name) && name.replace(name.match(exp)[0], '') == '') {
+                    const newExp = new RegExp(exp);
+                    if (newExp.test(name) && name.replace(name.match(newExp)[0], '') == '') {
                         desiredFilesArray.push({ name: filename, url: browser_download_url, version: release.tag_name, directory: directory });
                         break;
                     };
@@ -222,6 +223,7 @@ var translation = csvToJSON(translationFile);
             return desiredFilesArray;
         } catch (e) {
             atmoDebug.logError(13, e);
+            process.exit(1);
         };
     };
     process.setMaxListeners(0);
@@ -281,12 +283,15 @@ var translation = csvToJSON(translationFile);
     if(useStartuplogo) files.push({ name: "gen_patches.py", url: "https://raw.githubusercontent.com/friedkeenan/switch-logo-patcher/master/gen_patches.py", version: "latest", directory: "../python"});
     if(useSplashscreen) files.push({ name: "insert_splash_screen.py", url: "https://github.com/Atmosphere-NX/Atmosphere/raw/master/utilities/insert_splash_screen.py", version: "latest", directory: "../python"});
     
-    if(config.onlineFiles.length > 0) {    
-        config.onlineFiles.map(f => {
-            if(f.version == null) f.version = "latest";
+    if(config.onlineFiles.length > 0) {  
+        for(let f of config.onlineFiles) {
             files.push(f)
-        })
+        }
     }
+
+    files.map(f => {
+        if(f.version == null) f.version = "latest";
+    })
 
     atmoDebug.logWarn(15);
 
