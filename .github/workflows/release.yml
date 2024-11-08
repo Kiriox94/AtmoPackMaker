@@ -26,6 +26,13 @@ jobs:
         run: |
           npm i
           node index
+      - name: Get release notes
+        id: read_release_body
+        run: |
+          content=$(cat content.md)
+          echo "RELEASE_BODY<<EOF" >> $GITHUB_ENV
+          echo "$content" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -34,6 +41,7 @@ jobs:
         with:
           tag_name: ${{ inputs.version }}
           release_name: Release ${{ inputs.version }}
+          body: ${{ env.RELEASE_BODY }}
           draft: false
           prerelease: false
       - name: Upload Release Asset
@@ -44,6 +52,6 @@ jobs:
           PACK_VERSION: ${{ inputs.version }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./${{ vars.PACK_NAME }}.zip
-          asset_name: ${{ vars.PACK_NAME }}.zip
+          asset_path: ./pack.zip
+          asset_name: pack.zip
           asset_content_type: application/zip

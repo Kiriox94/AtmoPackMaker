@@ -13,11 +13,6 @@
             "link": "XorTroll/Goldleaf", "desiredFiles": [{ 
                 "filename": "Goldleaf.nro", "directory": "switch"
             }] 
-        }, 
-        { 
-            "link": "J-D-K/JKSV", "desiredFiles": [{ 
-                "filename": "JKSV.nro", "directory": "switch"
-            }] 
         },
         { 
             "link": "rashevskyv/dbi", "desiredFiles": [{ 
@@ -28,13 +23,38 @@
             "link": "meganukebmp/Switch_90DNS_tester", "desiredFiles": [{ 
                 "filename": "Switch_90DNS_tester.nro", "directory": "switch"
             }] 
+        },
+        { 
+            "link": "fortheusers/hb-appstore", "desiredFiles": [{ 
+                "filename": "appstore.nro", "directory": "switch"
+            }] 
+        }, 
+        { 
+            "link": "impeeza/sys-patch", "desiredFiles": [{ 
+                "exp": "/^sys-patch-(\\d+(\\.\\d+))((\\.\\d+))\\.zip$/", "filename": "sys-patch.zip" 
+            }] 
         }
     ],
     "onlineFiles": [
         {
-            "name": "hekate_ipl.ini",
-            "url": "https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/hekate_ipl.ini",
-            "directory": "bootloader"
+            "name": "gen_patches.py", 
+            "url": "https://github.com/friedkeenan/switch-logo-patcher/raw/refs/heads/master/gen_patches.py", 
+            "directory": "../python"
+        },
+        {
+            "name": "insert_splash_screen.py",
+            "url": "https://github.com/Atmosphere-NX/Atmosphere/raw/master/utilities/insert_splash_screen.py",
+            "directory": "../python"
         }
+    ],
+    "pythonScripts": [
+        {
+            "filename": "gen_patches.py", 
+            "args": ["./SD/atmosphere/exefs_patches/startup_logo", "./Jibbz Pirate.png"]
+        }
+    ],
+    "pythonDependencies": [
+        "Pillow",
+        "ips.py"
     ]
 }

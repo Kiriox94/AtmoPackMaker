@@ -7,3 +7,4 @@ python/
 .env
 package-lock.json
 yarn.lock
+content.md

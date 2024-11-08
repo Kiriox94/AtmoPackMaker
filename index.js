@@ -5,7 +5,6 @@ const cliProgress = require('cli-progress');
 const chalk = require('chalk');
 const { PythonShell } = require('python-shell');
 const moment = require('moment');
-const qoa = require('qoa');
 const ZIP = require('zip-lib');
 const path = require("path")
 const { exec } = require('child_process');
@@ -15,9 +14,6 @@ moment.locale('en');
 
 const config  = require("./config.json")
 const defaultLanguage = "en";
-
-const useStartuplogo = config.startuplogoPath !== null && config.startuplogoPath !== ""
-const useSplashscreen = config.splashscreenPath !== null && config.splashscreenPath !== ""
 
 const colors = {
     'default': (text) => { return chalk.hex('#2C3579')(text); },
@@ -107,13 +103,13 @@ var translation = csvToJSON(translationFile);
 
     var GITHUB_TOKEN = '';
     var PACK_NAME = "Vanilla Pack"
-    var PACK_VERSION = "Test Version"
+    var PACK_VERSION = "vTest"
 
     if (process.env.PACK_NAME)
         PACK_NAME = process.env.PACK_NAME;
 
     if (process.env.PACK_VERSION)
-        PACK_NAME = process.env.PACK_NAME;
+        PACK_VERSION = process.env.PACK_VERSION;
 
     if (process.env.REPO_LINK)
         config.repoLink = process.env.REPO_LINK;
@@ -145,35 +141,8 @@ var translation = csvToJSON(translationFile);
         atmoDebug.logWarn(5)
     };
 
-    if(useStartuplogo) {
-        exec("python -m pip install Pillow")
-        exec("python -m pip install ips.py")
-
-        atmoDebug.logSuccess(6)
-    }else if(useSplashscreen) {
-        exec("python -m pip install Pillow")
-
-        atmoDebug.logSuccess(6)
-    }
-
-    if(useStartuplogo) {
-        let dimensions = sizeOf(config.startuplogoPath)
-        
-        if(dimensions.width != 308 || dimensions.height != 350) {
-            atmoDebug.logError(7)
-            useStartuplogo = false;
-        }
-    }
-    if(useSplashscreen) {
-        let dimensions = sizeOf(config.splashscreenPath)
-        
-        if(dimensions.width != 1280 || dimensions.height != 720) {
-            if (dimensions.width != 720 || dimensions.height != 1280) {
-                atmoDebug.logError(8);
-                useSplashscreen = false;
-            }
-
-        }
+    if (config.pythonDependencies.length > 0) {
+        exec(`python -m pip install ${config.pythonDependencies.join(" ")}`)
     }
 
     async function getRelease(link, desiredFiles) {
@@ -184,10 +153,6 @@ var translation = csvToJSON(translationFile);
                 atmoDebug.logError(9, link);
             } else if (release.headers.get('x-ratelimit-limit') == 60) {
                 atmoDebug.logError(10);
-                if (fs.existsSync('./.env'))
-                    await fs.unlink('./.env');
-                if (fs.existsSync('./key.txt'))
-                    await fs.unlink('./key.txt');
                 process.exit(1);
             } else if (release.headers.get('x-ratelimit-remaining') == 0) {
                 atmoDebug.logError(11);
@@ -240,11 +205,6 @@ var translation = csvToJSON(translationFile);
             { 
                 exp: /^fusee\.bin$/, filename: 'fusee.bin' , directory: "bootloader/payloads"
             }] 
-        }, 
-        { 
-            link: 'ITotalJustice/sys-patch', desiredFiles: [{ 
-                exp: /^sys-patch\.zip$/, filename: 'sys-patch.zip' 
-            }] 
         }];
 
     if(config.useAIO) {
@@ -270,27 +230,15 @@ var translation = csvToJSON(translationFile);
         let release = await getRelease(link, desiredFiles);
         files = files.concat(release);
     };
-
-    files.push( 
-        { name: "exosphere.ini", url: "https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/exosphere.ini" }, 
-        { name: "repair.ini", url: "https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/repair.ini", directory: "bootloader/ini" }, 
-        { name: "sysmmc.txt", url: "https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/sysmmc.txt", directory: "atmosphere/hosts" }, 
-        { name: "emummc.txt", url: "https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/emummc.txt", directory: "atmosphere/hosts" },
-        { name: "boot.ini", url: "https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/boot.ini" }, 
-        { name: "boot.dat", url: "https://raw.githubusercontent.com/THZoria/AtmoPack-Vanilla/main/download/boot.dat" }
-    )
-
-    if(useStartuplogo) files.push({ name: "gen_patches.py", url: "https://raw.githubusercontent.com/friedkeenan/switch-logo-patcher/master/gen_patches.py", version: "latest", directory: "../python"});
-    if(useSplashscreen) files.push({ name: "insert_splash_screen.py", url: "https://github.com/Atmosphere-NX/Atmosphere/raw/master/utilities/insert_splash_screen.py", version: "latest", directory: "../python"});
     
-    if(config.onlineFiles.length > 0) {  
+    if(config.onlineFiles && config.onlineFiles.length > 0) {  
         for(let f of config.onlineFiles) {
             files.push(f)
         }
     }
 
     files.map(f => {
-        if(f.version == null) f.version = "latest";
+        if(f.version == null) f.version = "unknown";
     })
 
     atmoDebug.logWarn(15);
@@ -325,9 +273,9 @@ var translation = csvToJSON(translationFile);
 
     atmoDebug.logSuccess(18);
     atmoDebug.logWarn(19);
-    let zip_temp_files = await fs.readdir(output_folder).then(files => { return files.filter(f => f.endsWith('.zip')) });
+    let zipFiles = await fs.readdir(output_folder).then(files => { return files.filter(f => f.endsWith('.zip')) });
 
-    for (let zip of zip_temp_files) {
+    for (let zip of zipFiles) {
         let extractFolder = zip.replace('.zip', '')
         if(!fs.existsSync(`./temp/${extractFolder}`))
             await fs.mkdir(`./temp/${extractFolder}`);
@@ -373,26 +321,31 @@ var translation = csvToJSON(translationFile);
         }
 
         if(config.useAIO) {
-            if(fs.existsSync("./homebrewsConfig/aio-switch-updater")) await fs.copy("./homebrewsConfig/aio-switch-updater", "./SD/config/aio-switch-updater")
+            if (!fs.existsSync("./SD/config")) fs.mkdir("./SD/config")
+            if (!fs.existsSync("./SD/config/aio-switch-updater")) fs.mkdir("./SD/config/aio-switch-updater")
             const settings = `{"ams": {"${PACK_NAME}": "https://github.com/${config.repoLink}/releases/latest/download/${PACK_NAME.replaceAll(" ", ".")}.zip"}}`
             fs.writeFile("./SD/config/aio-switch-updater/custom_packs.json", settings)
 
             atmoDebug.logSuccess(24)
         }
 
-        fs.writeFileSync("./SD/version.txt", `- ${PACK_NAME} ${PACK_VERSION} -\n\n\n\nCreated With AtmoPackMaker : https://github.com/Kiriox94/AtmoPackMaker`)
+        fs.writeFileSync("./SD/pack.txt", `${PACK_NAME} ${PACK_VERSION}\n\nContent: \n${files.map(f => `${f.name} (${f.version})`).join("\n")} \n\n\nCreated With AtmoPackMaker : https://github.com/Kiriox94/AtmoPackMaker.`)
+        fs.writeFileSync("./content.md", `# ${PACK_NAME} ${PACK_VERSION}\n\n## Content: \n${files.map(f => `- ${f.name} (${f.version})`).join("\n")} \n\n\n**Created With [AtmoPackMaker](https://github.com/Kiriox94/AtmoPackMaker)**.`)
 
-        atmoDebug.logWarn(25);
+        if (config.pythonScripts.length > 0) atmoDebug.logWarn(25);
 
         let promises = []
-        if(useStartuplogo) promises.push(PythonShell.run('./python/gen_patches.py', {args: ["./SD/atmosphere/exefs_patches/startup_logo", config.startuplogoPath]}))
-        if(useSplashscreen) promises.push(PythonShell.run('./python/insert_splash_screen.py', {args: [config.splashscreenPath, "./SD/atmosphere/package3"]}))
+        config.pythonScripts.forEach(s => {
+            let scriptPath = path.join("python", s.filename)
+            if (fs.existsSync(scriptPath)) promises.push(PythonShell.run(scriptPath, {args: s.args}))
+            else atmoDebug.logError('Python script "{0}" cannot be found.', scriptPath)      
+        });
 
         Promise.all(promises).then(async () => {
-            atmoDebug.logSuccess(26, promises.length);
+            if(promises.length > 0) atmoDebug.logSuccess(26, promises.length);
 
             atmoDebug.logWarn(27)
-            await ZIP.archiveFolder('./SD', `./${PACK_NAME}.zip`);
+            await ZIP.archiveFolder('./SD', "./pack.zip");
     
             atmoDebug.logSuccess(28);
             for (let file of files) {
@@ -400,13 +353,13 @@ var translation = csvToJSON(translationFile);
                 console.log(colors.default(`${name} (${version})`));
             };
     
-            await fs.emptyDir('./temp/', { recursive: true });
-            await fs.emptyDir('./SD/', { recursive: true });
+            fs.emptyDir('./temp/', { recursive: true });
+            fs.emptyDir('./SD/', { recursive: true });
             atmoDebug.logWarn(29, colors.default('temp'), colors.default('SD'))
-            atmoDebug.logSuccess(30, colors.default(`(${PACK_NAME}.zip)`))
+            atmoDebug.logSuccess(30, colors.default("(pack.zip)"))
         })
     } catch (e) {
-        atmoDebug.logError(31, PACK_NAME, e);
-        process.exit(1);
+        atmoDebug.logError(31, e);
+        // process.exit(1);
     };
 })();

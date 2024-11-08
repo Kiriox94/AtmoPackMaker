@@ -38,7 +38,7 @@ The main configuration is done with the [`config.json`](/config.json) file, whic
     - `link` represents the GitHub path of the repository, for example, for GoldLeaf: `XorTroll/Goldleaf`
     - `desiredFiles` is also an array representing all the files you want to be downloaded from the latest release of the repo. Here are the available properties:
         - `filename` represents the name the file will have once downloaded.
-        - `directory` represents the path on the SD card where you want your file to be placed. For example, for a homebrew, just put `switch` to place it in the right folder (leave blank if you want it placed at the root).
+        - `directory` represents the path on the SD card where you want your file to be placed. For  a homebrew, just put `switch` to place it in the right folder (leave blank if you want it placed at the root).
         - `exp` represents the name of the file you want to retrieve from the release in the form of a [regular expression](https://www.regular-expressions.info/), handy if the filename changes with versions. For example, to download the correct file on the Atmosphere release: `/^atmosphere-(\d+(\.\d+))((\.\d+))-[a-zA-Z]+-[a-zA-Z0-9]+\+hbl-[0-9]*\.[0-9]+[0-9]*\.[0-9]+\+hbmenu-[0-9]*\.[0-9]+[0-9]*\.[0-9]+\.zip$/` (if nothing is specified, it will be generated automatically from the `filename` property).
 
 - `onlineFiles` represents the files you want to download via a link. Each element of the array represents a different file, and each must have these properties:
@@ -49,9 +49,6 @@ The main configuration is done with the [`config.json`](/config.json) file, whic
 # Compilation
 To easily compile the pack, I use [GitHub's workflow system](https://docs.github.com/en/actions/using-workflows/about-workflows). To enable it, go to [the actions section](../../actions) of your repository, and click on the blue button.\
 ![actions](/.github/actions.png)
-
-## Automatic
-Allows triggering the compilation of the pack directly from your switch. This option is still in development, please refer to the manual system in the meantime.
 
 ## Manual
 ### Build And Release

@@ -9,14 +9,14 @@ Les modules Python ont correctement été installés.;Python modules have been s
 Le logo de démarrage n'a pas la taille requise (308x350);The startup logo does not have the required size (308x350).
 Le splash screen n'a pas la taille requise (1280x720);The splash screen does not have the required size (1280x720).
 https://api.github.com/repos/{0}/releases retourne une erreur 404.;https://api.github.com/repos/{0}/releases returns a 404 error.
-La clé d'accès à l'API de GitHub est erronée, vous allez devoir recommencer une configuration.;"The GitHub API access key is incorrect, you will need to restart the configuration."""
+La clé d'accès à l'API de GitHub est erronée, vous allez devoir recommencer une configuration.;The GitHub API access key is incorrect, you will need to restart the configuration.
 Vous avez dépassé le nombre de requêtes maximum par heure, vous devez attendre {0} avant de pouvoir réutiliser le programme.;"You have exceeded the maximum number of requests per hour, you must wait {0} before being able to reuse the program."""
 Il n'y a pas de fichiers sur la dernière version de {0}.;There are no files on the latest version of {0}.
 [GetRelease] Une erreur est survenue: {0};[GetRelease] An error occurred: {0}
 Récupération de la dernière version des dépôts GitHub en cours...\j;Retrieving the latest version of GitHub repositories...\j
 \jLes fichiers nécessaires à la création du pack sont en cours de téléchargement...;\jThe files needed to create the pack are being downloaded...
 Le fichier {0} a été téléchargé avec succès.;File {0} has been successfully downloaded.
-Le fichier {0} n'a pas pu être téléchargé. {1};File {0} could not be downloaded. {1}
+Le fichier {0} n'a pas pu être téléchargé: {1};File {0} could not be downloaded: {1}
 \jTous les fichiers nécessaires ont été téléchargés.;\jAll necessary files have been downloaded.
 \jPréparation du dossier SD...\j;\jPreparing the SD folder...\j
 Le fichier {0} a été extrait avec succès.;File {0} has been successfully extracted.
@@ -30,6 +30,6 @@ Tous les scripts Python ont été exécutés avec succès ({0}).;All Python scri
 Voici le contenu du pack:;Here is the content of the pack:
 \jLe contenu des dossiers {0} et {1} ont été supprimés.;\jThe content of folders {0} and {1} has been deleted.
 \jLe pack a été créé avec succès {0}.;\jThe pack has been successfully created {0}.
-[Copie et création de {0}.zip] Une erreur est survenue: {1};[Copy and creation of {0}.zip] An error occurred: {1}
+[Copie et création de pack.zip] Une erreur est survenue: {0};[Copy and creation of pack.zip] An error occurred: {0}
 {0} récupéré.;{0} recovered.
 \jLe fichier {0} ({1}) est en cours de téléchargement...;\jThe file {0} ({1}) is currently downloading...
