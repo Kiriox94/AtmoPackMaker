@@ -50,7 +50,7 @@
     "pythonScripts": [
         {
             "filename": "gen_patches.py", 
-            "args": ["./SD/atmosphere/exefs_patches/startup_logo", "./Jibbz Pirate.png"]
+            "args": ["./SD/atmosphere/exefs_patches/startup_logo", "./startup_logo.png"]
         }
     ],
     "pythonDependencies": [
