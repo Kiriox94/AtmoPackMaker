@@ -8,7 +8,6 @@ const moment = require('moment');
 const ZIP = require('zip-lib');
 const path = require("path")
 const { exec } = require('child_process');
-const sizeOf = require('image-size');
 require('dotenv').config();
 moment.locale('en');
 
@@ -142,7 +141,7 @@ var translation = csvToJSON(translationFile);
     };
 
     if (config.pythonDependencies.length > 0) {
-        exec(`python -m pip install ${config.pythonDependencies.join(" ")}`)
+        exec(`${process.platform === 'win32' ? "pip" : "pip3"} install ${config.pythonDependencies.join(" ")}`)
     }
 
     async function getRelease(link, desiredFiles) {
