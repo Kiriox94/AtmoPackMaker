@@ -141,7 +141,8 @@ var translation = csvToJSON(translationFile);
     };
 
     if (config.pythonDependencies.length > 0) {
-        exec(`${process.platform === 'win32' ? "pip" : "pip3"} install ${config.pythonDependencies.join(" ")}`)
+        exec("python -m pip install --upgrade pip")
+        exec(`python -m pip install ${config.pythonDependencies.join(" ")}`)
     }
 
     async function getRelease(link, desiredFiles) {
